@@ -127,17 +127,22 @@ class TPTableViewController: UIViewController {
         // TODO: check if search bar should be added
         self.searchController = UISearchController(searchResultsController: nil)
         self.searchController.searchBar.delegate = self
-        navigationItem.searchController = searchController
+
+        if #available(iOS 11, *) {
+            navigationItem.searchController = searchController
+        }
+
         if let textField = self.searchController.searchBar.value(forKey: "_searchField") as? UITextField {
             textField.clearButtonMode = .always
         }
 
         self.searchController.dimsBackgroundDuringPresentation = false
-//        searchController.obscuresBackgroundDuringPresentation = false
 
         // Default behaviour is searchbar is hidden until you pull down, so persist it
-        navigationItem.hidesSearchBarWhenScrolling = false
-        navigationController?.navigationBar.prefersLargeTitles = false
+        if #available(iOS 11, *) {
+            navigationItem.hidesSearchBarWhenScrolling = false
+            navigationController?.navigationBar.prefersLargeTitles = false
+        }
 
         definesPresentationContext = true
     }
@@ -332,7 +337,7 @@ extension TPTableViewController: UISearchBarDelegate {
         self.searchWasCancelled = true
 
         self.noMoreResults = false
-        guard searchTerms != "" else {
+        guard self.searchTerms != "" else {
             // don't need to search again
             return
 
@@ -344,8 +349,7 @@ extension TPTableViewController: UISearchBarDelegate {
             self.searchController.searchBar.text = ""
         }
 
-        searchTerms = ""
-
+        self.searchTerms = ""
 
         self.delegate?.loadPaginatedData?(page: 1, limit: self.itemsPerPage, query: "", {
             self.isLoadingData = false
