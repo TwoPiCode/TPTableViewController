@@ -1,0 +1,6 @@
+framework module TPTableViewController {
+  umbrella header "TPTableViewController-umbrella.h"
+
+  export *
+  module * { export * }
+}

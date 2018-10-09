@@ -29,9 +29,9 @@
 
 /* Begin PBXFileReference section */
 		1938B2862E6645C04CD2EA35 /* Pods-TPTableViewController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TPTableViewController_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TPTableViewController_Example/Pods-TPTableViewController_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		2C577341F4A44DC9307B0307 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		54603909A4F459D6E2DAFAB0 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		5B8E5D58DE0F038C9BCF9072 /* TPTableViewController.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = TPTableViewController.podspec; path = ../TPTableViewController.podspec; sourceTree = "<group>"; };
+		2C577341F4A44DC9307B0307 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		54603909A4F459D6E2DAFAB0 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		5B8E5D58DE0F038C9BCF9072 /* TPTableViewController.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = TPTableViewController.podspec; path = ../TPTableViewController.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		607FACD01AFB9204008FA782 /* TPTableViewController_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TPTableViewController_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };

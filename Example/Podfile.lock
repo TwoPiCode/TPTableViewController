@@ -1,0 +1,16 @@
+PODS:
+  - TPTableViewController (0.1.0)
+
+DEPENDENCIES:
+  - TPTableViewController (from `../`)
+
+EXTERNAL SOURCES:
+  TPTableViewController:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  TPTableViewController: e2fe3ac7450a37de7739d70715686f02303f72dc
+
+PODFILE CHECKSUM: 75b36722a7c631f94a18eb43fad3a455c0fdbacc
+
+COCOAPODS: 1.5.3

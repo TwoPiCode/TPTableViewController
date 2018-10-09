@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/cocoapods/l/TPTableViewController.svg?style=flat)](https://cocoapods.org/pods/TPTableViewController)
 [![Platform](https://img.shields.io/cocoapods/p/TPTableViewController.svg?style=flat)](https://cocoapods.org/pods/TPTableViewController)
 
+At the moment this is just for use in our CHAi iOS app and very bare bones. Use at your own risk!
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.

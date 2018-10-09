@@ -1,0 +1,794 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0B9B3479D7E4F3ECAC65A21532AFFAB0 /* Pods-TPTableViewController_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6832A7C6261EF8231931B4269FFD6CA9 /* Pods-TPTableViewController_Tests-dummy.m */; };
+		256590C68D87673D79921B26F262A0C4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
+		5AB20794E93E3E4F87E1A710036BE159 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
+		5BA6A38438FB065D56E69C673B1769F0 /* Pods-TPTableViewController_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BC220F5AC85351E232D18159A0374D /* Pods-TPTableViewController_Example-dummy.m */; };
+		6141D02739AD5DAD7D6D1C78DFDA52B5 /* Pods-TPTableViewController_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 161F7E84F72DCF124FDD18BC64059E0B /* Pods-TPTableViewController_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9C461977429441EF882F9AB3CB908ED8 /* TPTableViewController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E176618648B538BB77DF47102533149D /* TPTableViewController-dummy.m */; };
+		BFEEEDB69E45F74E4C2FCE2379231C2F /* TPTableViewController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F7D72FED7B98E46BF32C54B4806F0DF /* TPTableViewController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D0C97660EEE1D1D88019B668F34161BB /* Pods-TPTableViewController_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B6BE3FB748910EF15B9F364B8C42E2B /* Pods-TPTableViewController_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E8B0ACAA11358D131626259A23B4E5DA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
+		FE75790B216D6B0800FB6065 /* TPTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE757908216D6B0800FB6065 /* TPTableViewController.swift */; };
+		FE75790C216D6B0800FB6065 /* TPTableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE757909216D6B0800FB6065 /* TPTableData.swift */; };
+		FE75790D216D6B0800FB6065 /* TPTableViewController+Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE75790A216D6B0800FB6065 /* TPTableViewController+Pagination.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1512CA12013647CF22080B9B8901715C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 71A14D0CF5C7077F4A4F31D156AD8D40;
+			remoteInfo = "Pods-TPTableViewController_Example";
+		};
+		A6BD7CF2C8281E5DB9DBED36AC8DB2C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB43BC03152E3B83801D1C8531DACB21;
+			remoteInfo = TPTableViewController;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		074179B04459BE9380CD74C527C30812 /* Pods-TPTableViewController_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-TPTableViewController_Tests-frameworks.sh"; sourceTree = "<group>"; };
+		0B6BE3FB748910EF15B9F364B8C42E2B /* Pods-TPTableViewController_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-TPTableViewController_Tests-umbrella.h"; sourceTree = "<group>"; };
+		161F7E84F72DCF124FDD18BC64059E0B /* Pods-TPTableViewController_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-TPTableViewController_Example-umbrella.h"; sourceTree = "<group>"; };
+		230A55E50E71CC57DD899D7075197322 /* Pods-TPTableViewController_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-TPTableViewController_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
+		242CEEDD42B9131D2AB976F9BF303875 /* TPTableViewController.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = TPTableViewController.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		2C4694014DFA5BE771E1CBA7BF3B7EC1 /* Pods-TPTableViewController_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-TPTableViewController_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
+		3BE0516EFBC56264F9721A0332650CBF /* Pods-TPTableViewController_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-TPTableViewController_Example-frameworks.sh"; sourceTree = "<group>"; };
+		555D2699C55941F31B0AD0FBA4CC524F /* TPTableViewController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = TPTableViewController.modulemap; sourceTree = "<group>"; };
+		5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		5F8BA02E383BEE33D08E4D33E7423565 /* Pods_TPTableViewController_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TPTableViewController_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6565939BC3C223BF360F5DFE79CF706A /* Pods-TPTableViewController_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TPTableViewController_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		6832A7C6261EF8231931B4269FFD6CA9 /* Pods-TPTableViewController_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-TPTableViewController_Tests-dummy.m"; sourceTree = "<group>"; };
+		759CD3EA9EDA46341A024DF2020702F4 /* Pods-TPTableViewController_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TPTableViewController_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		7F7D72FED7B98E46BF32C54B4806F0DF /* TPTableViewController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TPTableViewController-umbrella.h"; sourceTree = "<group>"; };
+		852DBC757BF5942F3B8B7D654D3F7E02 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		912E6CA945D157D2D678A419802CE044 /* Pods-TPTableViewController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TPTableViewController_Example.release.xcconfig"; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		97D6EC1E4A384E48F1B66C6D83E2DF8A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A165F982EAD61EEE6A659E7C1CC9361F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B565E3901FDFCD6E272A70DCED025F2F /* Pods-TPTableViewController_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-TPTableViewController_Tests-resources.sh"; sourceTree = "<group>"; };
+		B9B9678A312C27D89FDA40BB2549B7A7 /* Pods-TPTableViewController_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-TPTableViewController_Example.modulemap"; sourceTree = "<group>"; };
+		BA10DD8EC123D6EE3DAF7E64F5EE291F /* Pods-TPTableViewController_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-TPTableViewController_Example-resources.sh"; sourceTree = "<group>"; };
+		BADA0E89F79D4B6C90857C49ED84E7E9 /* Pods-TPTableViewController_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-TPTableViewController_Tests.modulemap"; sourceTree = "<group>"; };
+		BBE840F769519B561B1367AF47D15326 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		BD52E27D84BFC78216B3B3E173FDFEDC /* Pods-TPTableViewController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TPTableViewController_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		C7BC220F5AC85351E232D18159A0374D /* Pods-TPTableViewController_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-TPTableViewController_Example-dummy.m"; sourceTree = "<group>"; };
+		CFE27EE03E5DF6D6AC43359473A2B752 /* Pods-TPTableViewController_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-TPTableViewController_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		D1E73903BA03FCA357F6299984362990 /* TPTableViewController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TPTableViewController.xcconfig; sourceTree = "<group>"; };
+		D4840399D80EFEC92195E7985155FC6C /* Pods-TPTableViewController_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-TPTableViewController_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		D58134B8B1E20C249F277E9DC49B6529 /* Pods_TPTableViewController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TPTableViewController_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DADCB400184ECB254C8D5A6730A05B55 /* TPTableViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TPTableViewController-prefix.pch"; sourceTree = "<group>"; };
+		E176618648B538BB77DF47102533149D /* TPTableViewController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "TPTableViewController-dummy.m"; sourceTree = "<group>"; };
+		FE757908216D6B0800FB6065 /* TPTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TPTableViewController.swift; path = TPTableViewController/Classes/TPTableViewController.swift; sourceTree = "<group>"; };
+		FE757909216D6B0800FB6065 /* TPTableData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TPTableData.swift; path = TPTableViewController/Classes/TPTableData.swift; sourceTree = "<group>"; };
+		FE75790A216D6B0800FB6065 /* TPTableViewController+Pagination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TPTableViewController+Pagination.swift"; path = "TPTableViewController/Classes/TPTableViewController+Pagination.swift"; sourceTree = "<group>"; };
+		FF0D668EBD6F79BC4FBA4E6A8DC327F5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		FF9B5613346FBF890937E64C714B09CC /* TPTableViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TPTableViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0F3E35148643FC4758CA98768CDFE688 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				256590C68D87673D79921B26F262A0C4 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		197ABC3EBB8CCEC93806A334EA48F01F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8B0ACAA11358D131626259A23B4E5DA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6473F79F2757FCA4BF2EA76EB61C829D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AB20794E93E3E4F87E1A710036BE159 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08A02E2B3BA76B1F775B72AA29B98CE1 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				43EF449AA90A9907F1272E8CDB2E00C2 /* Pods-TPTableViewController_Example */,
+				3EBA04C524CEDFE859EA96EF5CB4F79D /* Pods-TPTableViewController_Tests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		3EBA04C524CEDFE859EA96EF5CB4F79D /* Pods-TPTableViewController_Tests */ = {
+			isa = PBXGroup;
+			children = (
+				852DBC757BF5942F3B8B7D654D3F7E02 /* Info.plist */,
+				BADA0E89F79D4B6C90857C49ED84E7E9 /* Pods-TPTableViewController_Tests.modulemap */,
+				CFE27EE03E5DF6D6AC43359473A2B752 /* Pods-TPTableViewController_Tests-acknowledgements.markdown */,
+				230A55E50E71CC57DD899D7075197322 /* Pods-TPTableViewController_Tests-acknowledgements.plist */,
+				6832A7C6261EF8231931B4269FFD6CA9 /* Pods-TPTableViewController_Tests-dummy.m */,
+				074179B04459BE9380CD74C527C30812 /* Pods-TPTableViewController_Tests-frameworks.sh */,
+				B565E3901FDFCD6E272A70DCED025F2F /* Pods-TPTableViewController_Tests-resources.sh */,
+				0B6BE3FB748910EF15B9F364B8C42E2B /* Pods-TPTableViewController_Tests-umbrella.h */,
+				759CD3EA9EDA46341A024DF2020702F4 /* Pods-TPTableViewController_Tests.debug.xcconfig */,
+				6565939BC3C223BF360F5DFE79CF706A /* Pods-TPTableViewController_Tests.release.xcconfig */,
+			);
+			name = "Pods-TPTableViewController_Tests";
+			path = "Target Support Files/Pods-TPTableViewController_Tests";
+			sourceTree = "<group>";
+		};
+		43EF449AA90A9907F1272E8CDB2E00C2 /* Pods-TPTableViewController_Example */ = {
+			isa = PBXGroup;
+			children = (
+				A165F982EAD61EEE6A659E7C1CC9361F /* Info.plist */,
+				B9B9678A312C27D89FDA40BB2549B7A7 /* Pods-TPTableViewController_Example.modulemap */,
+				2C4694014DFA5BE771E1CBA7BF3B7EC1 /* Pods-TPTableViewController_Example-acknowledgements.markdown */,
+				D4840399D80EFEC92195E7985155FC6C /* Pods-TPTableViewController_Example-acknowledgements.plist */,
+				C7BC220F5AC85351E232D18159A0374D /* Pods-TPTableViewController_Example-dummy.m */,
+				3BE0516EFBC56264F9721A0332650CBF /* Pods-TPTableViewController_Example-frameworks.sh */,
+				BA10DD8EC123D6EE3DAF7E64F5EE291F /* Pods-TPTableViewController_Example-resources.sh */,
+				161F7E84F72DCF124FDD18BC64059E0B /* Pods-TPTableViewController_Example-umbrella.h */,
+				BD52E27D84BFC78216B3B3E173FDFEDC /* Pods-TPTableViewController_Example.debug.xcconfig */,
+				912E6CA945D157D2D678A419802CE044 /* Pods-TPTableViewController_Example.release.xcconfig */,
+			);
+			name = "Pods-TPTableViewController_Example";
+			path = "Target Support Files/Pods-TPTableViewController_Example";
+			sourceTree = "<group>";
+		};
+		5B17FC12C1F48E48D9EF2D30761DA63A /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				97D6EC1E4A384E48F1B66C6D83E2DF8A /* Info.plist */,
+				555D2699C55941F31B0AD0FBA4CC524F /* TPTableViewController.modulemap */,
+				D1E73903BA03FCA357F6299984362990 /* TPTableViewController.xcconfig */,
+				E176618648B538BB77DF47102533149D /* TPTableViewController-dummy.m */,
+				DADCB400184ECB254C8D5A6730A05B55 /* TPTableViewController-prefix.pch */,
+				7F7D72FED7B98E46BF32C54B4806F0DF /* TPTableViewController-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/TPTableViewController";
+			sourceTree = "<group>";
+		};
+		5E0D919E635D23B70123790B8308F8EF /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		608348CF75E0F9315A3ACA2BE326371B /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				FE757909216D6B0800FB6065 /* TPTableData.swift */,
+				FE757908216D6B0800FB6065 /* TPTableViewController.swift */,
+				FE75790A216D6B0800FB6065 /* TPTableViewController+Pagination.swift */,
+				BBE840F769519B561B1367AF47D15326 /* LICENSE */,
+				FF0D668EBD6F79BC4FBA4E6A8DC327F5 /* README.md */,
+				242CEEDD42B9131D2AB976F9BF303875 /* TPTableViewController.podspec */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				D2262DDA0798B8FDE74E85F0E743609E /* Development Pods */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				82F2C49633F65445E51FEB3F159C4AF2 /* Products */,
+				08A02E2B3BA76B1F775B72AA29B98CE1 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		82F2C49633F65445E51FEB3F159C4AF2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D58134B8B1E20C249F277E9DC49B6529 /* Pods_TPTableViewController_Example.framework */,
+				5F8BA02E383BEE33D08E4D33E7423565 /* Pods_TPTableViewController_Tests.framework */,
+				FF9B5613346FBF890937E64C714B09CC /* TPTableViewController.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		96A1A80F611C385D70CB247B3C702899 /* TPTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				608348CF75E0F9315A3ACA2BE326371B /* Pod */,
+				5B17FC12C1F48E48D9EF2D30761DA63A /* Support Files */,
+			);
+			name = TPTableViewController;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5E0D919E635D23B70123790B8308F8EF /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D2262DDA0798B8FDE74E85F0E743609E /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				96A1A80F611C385D70CB247B3C702899 /* TPTableViewController */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		06A7EF3A79DAD3AF3DE1F44A5658EE73 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0C97660EEE1D1D88019B668F34161BB /* Pods-TPTableViewController_Tests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7C86E149940FA3972FFCBBEC35DDE0BF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6141D02739AD5DAD7D6D1C78DFDA52B5 /* Pods-TPTableViewController_Example-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A80C2DBE8770A4F9EF010C3161236B63 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFEEEDB69E45F74E4C2FCE2379231C2F /* TPTableViewController-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		71A14D0CF5C7077F4A4F31D156AD8D40 /* Pods-TPTableViewController_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE43A8D0C9C67D639619920921491F5A /* Build configuration list for PBXNativeTarget "Pods-TPTableViewController_Example" */;
+			buildPhases = (
+				7C86E149940FA3972FFCBBEC35DDE0BF /* Headers */,
+				D986CBCD22FAC24C56777D8273CF31A0 /* Sources */,
+				0F3E35148643FC4758CA98768CDFE688 /* Frameworks */,
+				A8863AA202D313F0E077B9AD872DF41D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BA8C4E91B6490674FFC822B5F9F24BAD /* PBXTargetDependency */,
+			);
+			name = "Pods-TPTableViewController_Example";
+			productName = "Pods-TPTableViewController_Example";
+			productReference = D58134B8B1E20C249F277E9DC49B6529 /* Pods_TPTableViewController_Example.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BB43BC03152E3B83801D1C8531DACB21 /* TPTableViewController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3189ECDEAECAC5FCA7A5F6870F59A571 /* Build configuration list for PBXNativeTarget "TPTableViewController" */;
+			buildPhases = (
+				A80C2DBE8770A4F9EF010C3161236B63 /* Headers */,
+				50CD29CA3BACDB8D0ED806DE32BA27A1 /* Sources */,
+				197ABC3EBB8CCEC93806A334EA48F01F /* Frameworks */,
+				EB4B30364FDED50EED93275746DE836C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TPTableViewController;
+			productName = TPTableViewController;
+			productReference = FF9B5613346FBF890937E64C714B09CC /* TPTableViewController.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E33BD2884409A621B2EBF3E7647B1C7E /* Pods-TPTableViewController_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A4B5DA93179E85BF59F9E4E506AB6E0 /* Build configuration list for PBXNativeTarget "Pods-TPTableViewController_Tests" */;
+			buildPhases = (
+				06A7EF3A79DAD3AF3DE1F44A5658EE73 /* Headers */,
+				9D29C8CF82FA224D6E3035C73D4F0384 /* Sources */,
+				6473F79F2757FCA4BF2EA76EB61C829D /* Frameworks */,
+				38D675000A5A9FC5C4224C80C331FAB3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B2CF6366126F3C1F1C9EEB96E6CD0EA9 /* PBXTargetDependency */,
+			);
+			name = "Pods-TPTableViewController_Tests";
+			productName = "Pods-TPTableViewController_Tests";
+			productReference = 5F8BA02E383BEE33D08E4D33E7423565 /* Pods_TPTableViewController_Tests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
+				TargetAttributes = {
+					BB43BC03152E3B83801D1C8531DACB21 = {
+						LastSwiftMigration = 1000;
+					};
+				};
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 82F2C49633F65445E51FEB3F159C4AF2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				71A14D0CF5C7077F4A4F31D156AD8D40 /* Pods-TPTableViewController_Example */,
+				E33BD2884409A621B2EBF3E7647B1C7E /* Pods-TPTableViewController_Tests */,
+				BB43BC03152E3B83801D1C8531DACB21 /* TPTableViewController */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		38D675000A5A9FC5C4224C80C331FAB3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A8863AA202D313F0E077B9AD872DF41D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB4B30364FDED50EED93275746DE836C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		50CD29CA3BACDB8D0ED806DE32BA27A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C461977429441EF882F9AB3CB908ED8 /* TPTableViewController-dummy.m in Sources */,
+				FE75790D216D6B0800FB6065 /* TPTableViewController+Pagination.swift in Sources */,
+				FE75790C216D6B0800FB6065 /* TPTableData.swift in Sources */,
+				FE75790B216D6B0800FB6065 /* TPTableViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9D29C8CF82FA224D6E3035C73D4F0384 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B9B3479D7E4F3ECAC65A21532AFFAB0 /* Pods-TPTableViewController_Tests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D986CBCD22FAC24C56777D8273CF31A0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BA6A38438FB065D56E69C673B1769F0 /* Pods-TPTableViewController_Example-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B2CF6366126F3C1F1C9EEB96E6CD0EA9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-TPTableViewController_Example";
+			target = 71A14D0CF5C7077F4A4F31D156AD8D40 /* Pods-TPTableViewController_Example */;
+			targetProxy = 1512CA12013647CF22080B9B8901715C /* PBXContainerItemProxy */;
+		};
+		BA8C4E91B6490674FFC822B5F9F24BAD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TPTableViewController;
+			target = BB43BC03152E3B83801D1C8531DACB21 /* TPTableViewController */;
+			targetProxy = A6BD7CF2C8281E5DB9DBED36AC8DB2C2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		01320367ECFCD152C21F0E3CB9A74B80 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6565939BC3C223BF360F5DFE79CF706A /* Pods-TPTableViewController_Tests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-TPTableViewController_Tests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-TPTableViewController_Tests/Pods-TPTableViewController_Tests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		3AC2A42D35C155EDF5B04DC7DCBC4250 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 759CD3EA9EDA46341A024DF2020702F4 /* Pods-TPTableViewController_Tests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-TPTableViewController_Tests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-TPTableViewController_Tests/Pods-TPTableViewController_Tests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		47426F82ECD3A4D8BFB0097912D30B99 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1E73903BA03FCA357F6299984362990 /* TPTableViewController.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/TPTableViewController/TPTableViewController-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/TPTableViewController/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/TPTableViewController/TPTableViewController.modulemap";
+				PRODUCT_MODULE_NAME = TPTableViewController;
+				PRODUCT_NAME = TPTableViewController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		4A9A1FB6A74894098ECDC7E1B09CA6ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BD52E27D84BFC78216B3B3E173FDFEDC /* Pods-TPTableViewController_Example.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-TPTableViewController_Example/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-TPTableViewController_Example/Pods-TPTableViewController_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		56A05ADD3BABDA1B56D1F979845809B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		7DAD763DEC7C3850CF3DCC81BB00963B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1E73903BA03FCA357F6299984362990 /* TPTableViewController.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/TPTableViewController/TPTableViewController-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/TPTableViewController/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/TPTableViewController/TPTableViewController.modulemap";
+				PRODUCT_MODULE_NAME = TPTableViewController;
+				PRODUCT_NAME = TPTableViewController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B78C992DB636774E169A443D35F2DFAD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 912E6CA945D157D2D678A419802CE044 /* Pods-TPTableViewController_Example.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-TPTableViewController_Example/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-TPTableViewController_Example/Pods-TPTableViewController_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		BEFDB93BF207328A04F1220475D02C3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2A4B5DA93179E85BF59F9E4E506AB6E0 /* Build configuration list for PBXNativeTarget "Pods-TPTableViewController_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AC2A42D35C155EDF5B04DC7DCBC4250 /* Debug */,
+				01320367ECFCD152C21F0E3CB9A74B80 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEFDB93BF207328A04F1220475D02C3B /* Debug */,
+				56A05ADD3BABDA1B56D1F979845809B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3189ECDEAECAC5FCA7A5F6870F59A571 /* Build configuration list for PBXNativeTarget "TPTableViewController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7DAD763DEC7C3850CF3DCC81BB00963B /* Debug */,
+				47426F82ECD3A4D8BFB0097912D30B99 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BE43A8D0C9C67D639619920921491F5A /* Build configuration list for PBXNativeTarget "Pods-TPTableViewController_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A9A1FB6A74894098ECDC7E1B09CA6ED /* Debug */,
+				B78C992DB636774E169A443D35F2DFAD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}
