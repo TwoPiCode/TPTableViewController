@@ -10,11 +10,11 @@
 
 import UIKit
 
-public class TPTableViewController: UIViewController {
+open class TPTableViewController: UIViewController {
 
-    var tableView = UITableView()
+    public var tableView = UITableView()
 
-    var data = [TPTableData]() {
+    public var data = [TPTableData]() {
         didSet {
             DispatchQueue.main.async {
                 self.setNoContentLabel()
@@ -28,6 +28,7 @@ public class TPTableViewController: UIViewController {
     var searchWasCancelled = false
 
     // pagination
+    public var isPaginationEnabled = false
     var previousQuery = ""
     var noMoreResults = false
     let itemsPerPage = 10
@@ -35,7 +36,7 @@ public class TPTableViewController: UIViewController {
         return Int(self.data.count / self.itemsPerPage)
     }
 
-    weak var delegate: TPTableViewDelegate? {
+    open weak var delegate: TPTableViewDelegate? {
         didSet {
 
         }
@@ -73,14 +74,14 @@ public class TPTableViewController: UIViewController {
             }
         }
     }
-    var isFetchingData = false
+    public var isFetchingData = false
 
-    weak var dataSource: TPTableViewDataSource?
+    open weak var dataSource: TPTableViewDataSource?
 
     private var refreshControl = UIRefreshControl()
     var searchController = UISearchController()
 
-    override func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
 
         title = "Data"
@@ -88,7 +89,7 @@ public class TPTableViewController: UIViewController {
 
     var hasSetupTable = false
 
-    override func viewWillAppear(_ animated: Bool) {
+    override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         if !self.hasSetupTable {
@@ -177,7 +178,8 @@ public class TPTableViewController: UIViewController {
         }
     }
 
-    func setNoContentLabel() {
+    // TODO: not really sure if this needs to be public
+    public func setNoContentLabel() {
         var noDataText = "No data"
         var noResults = false
 
@@ -191,13 +193,13 @@ public class TPTableViewController: UIViewController {
             }
             noResults = true
         }
-//        else if self.filteredData.count == 0 {
-//            if let searchText = searchController?.searchBar.text {
-//                let defaultText = "\("No data") found matching the search term \"\(searchText)\""
-//                noDataText = self.delegate?.textForNoData() ?? defaultText
-//                noResults = true
-//            }
-//        }
+        //        else if self.filteredData.count == 0 {
+        //            if let searchText = searchController?.searchBar.text {
+        //                let defaultText = "\("No data") found matching the search term \"\(searchText)\""
+        //                noDataText = self.delegate?.textForNoData() ?? defaultText
+        //                noResults = true
+        //            }
+        //        }
 
         let isHidden = !noResults || isFetchingData
 
@@ -264,20 +266,20 @@ public class TPTableViewController: UIViewController {
 }
 
 extension TPTableViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.setNoContentLabel()
 
         return self.data.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = data[indexPath.row]
         return self.dataSource?.cellForRowAt(tableView: tableView,
                                              indexPath: indexPath,
                                              item: item) ?? UITableViewCell()
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // Check if we're displaying the last item. If we are, attempt to fetch the
         // next page of results
 
@@ -290,14 +292,14 @@ extension TPTableViewController: UITableViewDataSource {
 }
 
 extension TPTableViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         self.delegate?.didSelectRowAt(indexPath)
     }
 }
 
 extension TPTableViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.isLoadingData = true
         self.noMoreResults = false
         self.delegate?.loadPaginatedData?(page: 1, limit: self.itemsPerPage, query: searchText, {
@@ -308,20 +310,20 @@ extension TPTableViewController: UISearchBarDelegate {
 
         print("searching for \(searchText)")
 
-//        if paginationIsEnabled {
-//            self.filterData(searchText: searchText)
-//        } else {
-//            // with filtering
-//            // self.filterData(searchText: searchText)
+        //        if paginationIsEnabled {
+        //            self.filterData(searchText: searchText)
+        //        } else {
+        //            // with filtering
+        //            // self.filterData(searchText: searchText)
         //
-//            // without filtering
-//            // filter the data for the search and then reload
-//            self.filteredData = self.data.filter({ (item) -> Bool in
-//                item.matchesQuery(query: searchText)
-//            })
+        //            // without filtering
+        //            // filter the data for the search and then reload
+        //            self.filteredData = self.data.filter({ (item) -> Bool in
+        //                item.matchesQuery(query: searchText)
+        //            })
         //
-//            self.tableView.reloadData()
-//        }
+        //            self.tableView.reloadData()
+        //        }
     }
 
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
@@ -366,7 +368,7 @@ extension TPTableViewController: UISearchBarDelegate {
 
 }
 
-@objc protocol TPTableViewDelegate: class {
+@objc public protocol TPTableViewDelegate: class {
     func didSelectRowAt(_ indexPath: IndexPath)
     func textForNoData() -> String
     @objc optional func loadData(query: String?, _ completion: (() -> Void)!)
@@ -374,7 +376,7 @@ extension TPTableViewController: UISearchBarDelegate {
     @objc optional func itemName() -> String
 }
 
-protocol TPTableViewDataSource: class {
+public protocol TPTableViewDataSource: class {
     func cellForRowAt(tableView: UITableView, indexPath: IndexPath, item: TPTableData) -> UITableViewCell
 }
 

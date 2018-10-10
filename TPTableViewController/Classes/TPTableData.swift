@@ -5,22 +5,22 @@
 
 import Foundation
 
-public class TPTableData: NSObject {
-    var title: String?
+open class TPTableData: NSObject {
+    open var title: String?
 
-    override init() {
+    public override init() {
         super.init()
     }
 
-    init(title: String? = nil) {
+    public init(title: String? = nil) {
         self.title = title
     }
 
-    var titleForItem: String? {
+    open var titleForItem: String? {
         return self.title
     }
 
-    func matchesQuery(query: String) -> Bool {
+    open func matchesQuery(query: String) -> Bool {
         return true
     }
 }
