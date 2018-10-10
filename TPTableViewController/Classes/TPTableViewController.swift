@@ -10,7 +10,7 @@
 
 import UIKit
 
-class TPTableViewController: UIViewController {
+public class TPTableViewController: UIViewController {
 
     var tableView = UITableView()
 

@@ -5,7 +5,7 @@
 
 import Foundation
 
-class TPTableData: NSObject {
+public class TPTableData: NSObject {
     var title: String?
 
     override init() {
