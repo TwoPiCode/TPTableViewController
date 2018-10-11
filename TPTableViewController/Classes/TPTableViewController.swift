@@ -23,15 +23,21 @@ open class TPTableViewController: UIViewController {
         }
     }
 
+    public var currentRequest: URLSessionDataTask? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
+
     // search bar
-    var searchTerms = ""
+    public var searchTerms = ""
     var searchWasCancelled = false
 
     // pagination
     public var isPaginationEnabled = false
     var previousQuery = ""
     var noMoreResults = false
-    let itemsPerPage = 10
+    public let itemsPerPage = 20
     var pagesLoaded: Int {
         return Int(self.data.count / self.itemsPerPage)
     }
@@ -44,7 +50,7 @@ open class TPTableViewController: UIViewController {
 
     var releaseToRefreshText: String {
         if self.delegate?.itemName != nil, let text = delegate?.itemName!() {
-            return text
+            return "Release to refresh \(text.lowercased())"
         } else {
             return "Release to refresh data"
         }
@@ -52,7 +58,7 @@ open class TPTableViewController: UIViewController {
 
     var pullToRefreshText: String {
         if self.delegate?.itemName != nil, let text = delegate?.itemName!() {
-            return text
+            return "Pull to refresh \(text.lowercased())"
         } else {
             return "Pull to refresh data"
         }
@@ -60,14 +66,14 @@ open class TPTableViewController: UIViewController {
 
     var refreshingDataText: String {
         if self.delegate?.itemName != nil, let text = delegate?.itemName!() {
-            return text
+            return "Loading \(text.lowercased())"
         } else {
             return "Loading data"
         }
     }
 
     // Set to true when the API is loading data
-    var isLoadingData: Bool = false {
+    public var isLoadingData: Bool = false {
         didSet {
             DispatchQueue.main.async {
                 self.searchController.searchBar.isLoading = self.isLoadingData
@@ -78,18 +84,20 @@ open class TPTableViewController: UIViewController {
 
     open weak var dataSource: TPTableViewDataSource?
 
-    private var refreshControl = UIRefreshControl()
-    var searchController = UISearchController()
+    open var refreshControl = UIRefreshControl()
+    open var searchController = UISearchController()
 
-    override open func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Data"
+        if let itemName = delegate?.itemName?() {
+            title = itemName
+        }
     }
 
     var hasSetupTable = false
 
-    override open func viewWillAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         if !self.hasSetupTable {
@@ -98,7 +106,12 @@ open class TPTableViewController: UIViewController {
             self.setupTableView()
             self.setupSearchBar()
             self.setupRefreshControl()
+            self.refreshData()
         }
+    }
+
+    open override func viewDidLayoutSubviews() {
+        //        self.setupSearchBar()
     }
 
     func setupTableView() {
@@ -124,13 +137,14 @@ open class TPTableViewController: UIViewController {
         self.tableView.allowsSelection = self.delegate?.didSelectRowAt != nil
     }
 
-    func setupSearchBar() {
+    public func setupSearchBar() {
         // TODO: check if search bar should be added
         self.searchController = UISearchController(searchResultsController: nil)
         self.searchController.searchBar.delegate = self
 
         if #available(iOS 11, *) {
             navigationItem.searchController = searchController
+            navigationItem.largeTitleDisplayMode = .never
         }
 
         if let textField = self.searchController.searchBar.value(forKey: "_searchField") as? UITextField {
@@ -142,8 +156,14 @@ open class TPTableViewController: UIViewController {
         // Default behaviour is searchbar is hidden until you pull down, so persist it
         if #available(iOS 11, *) {
             navigationItem.hidesSearchBarWhenScrolling = false
-            navigationController?.navigationBar.prefersLargeTitles = false
         }
+
+        DispatchQueue.main.async {
+            for view in self.navigationController?.navigationBar.subviews ?? [] {
+                let subviews = view.subviews
+                if subviews.count > 0, let label = subviews[0] as? UILabel {
+                    label.textColor = UIColor.red
+                } } }
 
         definesPresentationContext = true
     }
@@ -235,13 +255,13 @@ open class TPTableViewController: UIViewController {
         }
     }
 
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if self.refreshControl.isRefreshing {
             self.refreshData()
         }
     }
 
-    @objc func refreshData() {
+    public func refreshData() {
         self.setNoContentLabel()
         self.isFetchingData = true
         self.refreshControl.layoutIfNeeded()
@@ -365,6 +385,9 @@ extension TPTableViewController: UISearchBarDelegate {
             self.searchTerms = searchBar.text ?? ""
         }
     }
+}
+
+extension TPTableViewController: UISearchControllerDelegate {
 
 }
 
