@@ -13,6 +13,7 @@ import UIKit
 open class TPTableViewController: UIViewController {
 
     public var tableView = UITableView()
+    public var segmentedControl = UISegmentedControl()
 
     public var data = [TPTableData]() {
         didSet {
@@ -42,6 +43,10 @@ open class TPTableViewController: UIViewController {
         }
     }
 
+    // TODO: enable switching
+    var segmentedControlEnabled = true
+
+
     // search bar
     public var searchTerms = ""
     public var searchWasCancelled = false
@@ -55,8 +60,6 @@ open class TPTableViewController: UIViewController {
         return Int(self.data.count / self.itemsPerPage)
     }
 
-    public var scopeIsEnabled = false
-
     open weak var delegate: TPTableViewDelegate? {
         didSet {
 
@@ -64,7 +67,7 @@ open class TPTableViewController: UIViewController {
     }
 
     var releaseToRefreshText: String {
-        if self.delegate?.itemName != nil, let text = delegate?.itemName!() {
+        if self.delegate?.itemName != nil, let text = delegate?.itemName?() {
             return "Release to refresh \(text.lowercased())"
         } else {
             return "Release to refresh data"
@@ -72,7 +75,7 @@ open class TPTableViewController: UIViewController {
     }
 
     var pullToRefreshText: String {
-        if self.delegate?.itemName != nil, let text = delegate?.itemName!() {
+        if self.delegate?.itemName != nil, let text = delegate?.itemName?() {
             return "Pull to refresh \(text.lowercased())"
         } else {
             return "Pull to refresh data"
@@ -80,7 +83,7 @@ open class TPTableViewController: UIViewController {
     }
 
     var refreshingDataText: String {
-        if self.delegate?.itemName != nil, let text = delegate?.itemName!() {
+        if self.delegate?.itemName != nil, let text = delegate?.itemName?() {
             return "Loading \(text.lowercased())"
         } else {
             return "Loading data"
@@ -113,10 +116,6 @@ open class TPTableViewController: UIViewController {
 
     var hasSetupTable = false
 
-    // Scope filtering
-    public var scopes: [String]?
-    lazy var cachedResults = [Int: [TPTableData]]()
-
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -128,10 +127,6 @@ open class TPTableViewController: UIViewController {
             self.setupRefreshControl()
             self.refreshData()
         }
-    }
-
-    open override func viewDidLayoutSubviews() {
-        //        self.setupSearchBar()
     }
 
     func setupTableView() {
@@ -149,7 +144,28 @@ open class TPTableViewController: UIViewController {
 
         self.tableView.translatesAutoresizingMaskIntoConstraints = false
 
-        self.tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        if segmentedControlEnabled {
+            segmentedControl = UISegmentedControl(items: ["One", "Two"])
+            view.addSubview(segmentedControl)
+            //            segmentedControl.insertSegment(withTitle: "One", at: 0, animated: true)
+            //            segmentedControl.insertSegment(withTitle: "Two", at: 1, animated: true)
+            //            segmentedControl.setTitle("One", forSegmentAt: 0)
+            //            segmentedControl.setTitle("Two", forSegmentAt: 1)
+
+            segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+
+            if #available(iOS 11.0, *) {
+                segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+            } else {
+                segmentedControl.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            }
+            segmentedControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+            segmentedControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+            self.tableView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor).isActive = true
+        } else {
+            self.tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        }
+
         self.tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         self.tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         self.tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -181,8 +197,10 @@ open class TPTableViewController: UIViewController {
         definesPresentationContext = true
 
         // scopes
-        self.searchController.searchBar.scopeButtonTitles = scopes
-        self.searchController.searchBar.showsScopeBar = true
+        //        self.searchController.searchBar.scopeButtonTitles = scopes
+        //        self.searchController.searchBar.showsScopeBar = true
+
+        self.searchController.searchBar.sizeToFit()
         self.searchController.delegate = self
     }
 
@@ -292,8 +310,8 @@ open class TPTableViewController: UIViewController {
 
         noMoreResults = false
 
-        if paginationIsEnabled {
-            self.delegate?.loadPaginatedData?(page: 1, limit: itemsPerPage, query: searchTerms) {
+        if self.paginationIsEnabled {
+            self.delegate?.loadPaginatedData?(page: 1, limit: self.itemsPerPage, query: self.searchTerms) {
                 DispatchQueue.main.async {
                     self.loadingDataEnded()
                 }
@@ -310,9 +328,11 @@ open class TPTableViewController: UIViewController {
         self.isFetchingData = false
         let pullToRefreshAttributedTitle = NSAttributedString(string: self.pullToRefreshText,
                                                               attributes: [:])
-        self.refreshControl.attributedTitle = pullToRefreshAttributedTitle
-        self.refreshControl.endRefreshing()
-        self.tableView.reloadData()
+        DispatchQueue.main.async {
+            self.refreshControl.attributedTitle = pullToRefreshAttributedTitle
+            self.refreshControl.endRefreshing()
+            self.tableView.reloadData()
+        }
     }
 
     func filterAndSetData() {
@@ -326,7 +346,7 @@ extension TPTableViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.setNoContentLabel()
 
-        if paginationIsEnabled {
+        if self.paginationIsEnabled {
             return self.data.count
         } else {
             return self.filteredData.count
@@ -336,10 +356,10 @@ extension TPTableViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var item: TPTableData
 
-        if paginationIsEnabled {
-            item = data[indexPath.row]
+        if self.paginationIsEnabled {
+            item = self.data[indexPath.row]
         } else {
-            item = filteredData[indexPath.row]
+            item = self.filteredData[indexPath.row]
         }
 
         return self.dataSource?.cellForRowAt(tableView: tableView,
@@ -349,7 +369,7 @@ extension TPTableViewController: UITableViewDataSource {
 
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 
-        if paginationIsEnabled {
+        if self.paginationIsEnabled {
             // Check if we're displaying the last item. If we are, attempt to fetch the
             // next page of results
 
@@ -372,7 +392,7 @@ extension TPTableViewController: UITableViewDelegate {
 extension TPTableViewController: UISearchBarDelegate {
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 
-        if paginationIsEnabled {
+        if self.paginationIsEnabled {
             self.isLoadingData = true
             self.noMoreResults = false
             self.delegate?.loadPaginatedData?(page: 1, limit: self.itemsPerPage, query: searchText, {
@@ -402,21 +422,12 @@ extension TPTableViewController: UISearchBarDelegate {
         //        }
     }
 
-    open func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        self.searchController.searchBar.showsScopeBar = self.scopeIsEnabled
-
-        // hmm
-        return true
-    }
-
     open func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.searchWasCancelled = false
-        self.searchController.searchBar.showsScopeBar = self.scopeIsEnabled
     }
 
     open func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.searchWasCancelled = true
-        self.searchController.searchBar.showsScopeBar = self.scopeIsEnabled
 
         self.noMoreResults = false
         guard self.searchTerms != "" else {
@@ -438,22 +449,12 @@ extension TPTableViewController: UISearchBarDelegate {
     }
 
     open func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        self.searchController.searchBar.showsScopeBar = self.scopeIsEnabled
         if self.searchWasCancelled {
             searchBar.text = self.searchTerms
         } else {
             self.searchTerms = searchBar.text ?? ""
         }
     }
-    //
-    //    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-    //        self.isLoadingData = true
-    //        self.filterDelegate?.didChangeScope?(scopeIndex: selectedScope, {
-    //            self.isLoadingData = false
-    //        })
-    //    }
-
-
 }
 
 extension TPTableViewController: UISearchControllerDelegate {
@@ -494,7 +495,7 @@ extension UISearchBar {
 
     private var searchIcon: UIImage? {
         let subViews = subviews.flatMap { $0.subviews }
-        return  ((subViews.filter { $0 is UIImageView }).first as? UIImageView)?.image
+        return ((subViews.filter { $0 is UIImageView }).first as? UIImageView)?.image
     }
 
     var isLoading: Bool {
@@ -503,7 +504,6 @@ extension UISearchBar {
         } set {
 
         }
-
 
         //        get {
         //            return self.activityIndicator != nil
@@ -529,4 +529,43 @@ extension UISearchBar {
         //            }
         //        }
     }
+}
+
+extension UIViewController{
+
+
+    /// Calculate top distance with "navigationBar" and "statusBar" by adding a
+    /// subview constraint to navigationBar or to topAnchor or superview
+    /// - Returns: The real distance between topViewController and Bottom navigationBar
+    func calculateTopDistance() -> CGFloat{
+
+        /// Create view for misure
+        let misureView : UIView     = UIView()
+        misureView.backgroundColor  = .clear
+        view.addSubview(misureView)
+
+        /// Add needed constraint
+        misureView.translatesAutoresizingMaskIntoConstraints                    = false
+        misureView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive     = true
+        misureView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive   = true
+        misureView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        if let nav = navigationController {
+            misureView.topAnchor.constraint(equalTo: nav.navigationBar.bottomAnchor).isActive = true
+        }else{
+            misureView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        }
+
+        /// Force layout
+        view.layoutIfNeeded()
+
+        /// Calculate distance
+        let distance = view.frame.size.height - misureView.frame.size.height
+
+        /// Remove from superview
+        misureView.removeFromSuperview()
+
+        return distance
+
+    }
+
 }
