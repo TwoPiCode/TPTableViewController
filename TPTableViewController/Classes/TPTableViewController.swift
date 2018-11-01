@@ -18,6 +18,7 @@ open class TPTableViewController: UIViewController {
 
     public var data = [TPTableData]() {
         didSet {
+            hasLoadedInitialData = true
             DispatchQueue.main.async {
                 if !self.paginationIsEnabled {
                     self.filterAndSetData()
@@ -64,6 +65,8 @@ open class TPTableViewController: UIViewController {
     var pagesLoaded: Int {
         return Int(self.data.count / self.itemsPerPage)
     }
+
+    var hasLoadedInitialData = false
 
     open weak var delegate: TPTableViewDelegate? {
         didSet {
@@ -113,6 +116,21 @@ open class TPTableViewController: UIViewController {
     open var refreshControl = UIRefreshControl()
     open var searchController = UISearchController()
 
+    var style: UITableView.Style = .plain
+
+    public init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    public init(style: UITableView.Style = .plain) {
+        super.init(nibName: nil, bundle: nil)
+        self.style = style
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     open override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -121,7 +139,6 @@ open class TPTableViewController: UIViewController {
         }
 
         self.setupSearchBar()
-
     }
 
     var hasSetupTable = false
@@ -132,7 +149,6 @@ open class TPTableViewController: UIViewController {
         if !self.hasSetupTable {
             self.hasSetupTable = true
 
-
             self.setupTableView()
             self.setupRefreshControl()
 
@@ -140,9 +156,9 @@ open class TPTableViewController: UIViewController {
 
             // TODO: should work out how to do this without a delay.
             // Probably an issue of where the refresh control starts off, then the tableview scrolls to that point
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.refreshData()
-            }
+            //            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+
+            //            }
         }
     }
 
@@ -167,6 +183,14 @@ open class TPTableViewController: UIViewController {
         // bit of a hack
         //        self.searchController.searchBar.layer.borderWidth = 1
         //        self.searchController.searchBar.layer.borderColor = self.backgroundColor.cgColor
+
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+
+        if !hasLoadedInitialData {
+            self.refreshData()
+        }
+
+        //        }
     }
 
     func layoutView() {
@@ -227,6 +251,10 @@ open class TPTableViewController: UIViewController {
     }
 
     func setupTableView() {
+        self.tableView = UITableView(frame: self.view.frame, style: self.style)
+
+        self.delegate?.registerReusableCell()
+
         // Setup tableview
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -324,9 +352,9 @@ open class TPTableViewController: UIViewController {
         // this is important for getting the layout right, otherwise the refresh controls text can get cut off
         self.extendedLayoutIncludesOpaqueBars = true
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.manuallyShowRefreshControl()
-        }
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        //            self.manuallyShowRefreshControl()
+        //        }
     }
 
     func manuallyShowRefreshControl() {
@@ -353,6 +381,11 @@ open class TPTableViewController: UIViewController {
 
     // TODO: not really sure if this needs to be public
     public func setNoContentLabel() {
+        guard hasLoadedInitialData else {
+            self.setInitialLoadingLabel()
+            return
+        }
+
         var noDataText = "No data"
         var noResults = false
 
@@ -397,6 +430,21 @@ open class TPTableViewController: UIViewController {
                 self.tableView.backgroundView = nil
             }
         }
+    }
+
+    func setInitialLoadingLabel() {
+        let tableViewSize = tableView.bounds.size
+        let labelFrame = CGRect(x: 0, y: 0, width: tableViewSize.width - 32, height: tableViewSize.height)
+        let noDataLabel = UILabel(frame: labelFrame)
+        noDataLabel.text = "\(refreshingDataText)..."
+        noDataLabel.textColor = UIColor.darkGray
+        noDataLabel.textAlignment = NSTextAlignment.center
+        noDataLabel.numberOfLines = 0
+
+        DispatchQueue.main.async {
+            self.tableView.backgroundView = noDataLabel
+        }
+
     }
 
     // MARK: - Pull to refresh
@@ -468,6 +516,11 @@ extension TPTableViewController: UITableViewDataSource {
         if self.paginationIsEnabled {
             return self.data.count
         } else {
+            if self.delegate?.filterDataForSection != nil {
+                return self.delegate?.filterDataForSection?(data: self.filteredData,
+                                                            section: section).count ?? 0
+            }
+
             return self.filteredData.count
         }
     }
@@ -478,7 +531,18 @@ extension TPTableViewController: UITableViewDataSource {
         if self.paginationIsEnabled {
             item = self.data[indexPath.row]
         } else {
-            item = self.filteredData[indexPath.row]
+
+            if self.delegate?.filterDataForSection != nil {
+                if let unwrappedItem = self.delegate?.filterDataForSection?(data: filteredData,
+                                                                            section: indexPath.section)[indexPath.row] {
+                    item = unwrappedItem
+                } else {
+                    // error
+                    return UITableViewCell()
+                }
+            } else {
+                item = self.filteredData[indexPath.row]
+            }
         }
 
         return self.dataSource?.cellForRowAt(tableView: tableView,
@@ -523,6 +587,9 @@ extension TPTableViewController: UISearchBarDelegate {
             self.filteredData = self.data.filter({ (item) -> Bool in
                 item.matchesQuery(query: searchText)
             })
+            print("Filtering data...")
+            print(self.filteredData.count)
+
         }
 
         //        if paginationIsEnabled {
@@ -562,14 +629,25 @@ extension TPTableViewController: UISearchBarDelegate {
 
         self.searchTerms = ""
 
-        self.delegate?.loadPaginatedData?(page: 1, limit: self.itemsPerPage, query: "", {
-            self.isLoadingData = false
-        })
+        if self.paginationIsEnabled {
+            self.delegate?.loadPaginatedData?(page: 1, limit: self.itemsPerPage, query: "", {
+                self.isLoadingData = false
+            })
+        } else {
+            DispatchQueue.main.async {
+                self.filteredData = self.data
+                self.tableView.reloadData()
+            }
+        }
     }
 
     open func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         if self.searchWasCancelled {
             searchBar.text = self.searchTerms
+            if !self.paginationIsEnabled {
+                self.filteredData = self.data
+                self.tableView.reloadData()
+            }
         } else {
             self.searchTerms = searchBar.text ?? ""
         }
@@ -592,6 +670,8 @@ extension TPTableViewController: UISearchControllerDelegate {
     @objc optional func loadData(query: String?, _ completion: (() -> Void)!)
     @objc optional func loadPaginatedData(page: Int, limit: Int, query: String, _ completion: (() -> Void)!)
     @objc optional func itemName() -> String
+    @objc optional func filterDataForSection(data: [TPTableData], section: Int) -> [TPTableData]
+    @objc func registerReusableCell()
 }
 
 public protocol TPTableViewDataSource: class {
