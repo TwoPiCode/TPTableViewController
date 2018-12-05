@@ -513,8 +513,11 @@ extension TPTableViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.setNoContentLabel()
 
-        if self.paginationIsEnabled {
+        if self.paginationIsEnabled && self.delegate?.filterDataForSection == nil {
             return self.data.count
+        } else if paginationIsEnabled && self.delegate?.filterDataForSection != nil {
+            return self.delegate?.filterDataForSection?(data: self.data,
+                                                        section: section).count ?? 0
         } else {
             if self.delegate?.filterDataForSection != nil {
                 return self.delegate?.filterDataForSection?(data: self.filteredData,
@@ -528,8 +531,20 @@ extension TPTableViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var item: TPTableData
 
-        if self.paginationIsEnabled {
+        if self.paginationIsEnabled && self.delegate?.filterDataForSection == nil {
             item = self.data[indexPath.row]
+        }else if paginationIsEnabled && self.delegate?.filterDataForSection != nil {
+            if self.delegate?.filterDataForSection != nil {
+                if let unwrappedItem = self.delegate?.filterDataForSection?(data: data,
+                                                                            section: indexPath.section)[indexPath.row] {
+                    item = unwrappedItem
+                } else {
+                    // error
+                    return UITableViewCell()
+                }
+            } else {
+                item = self.data[indexPath.row]
+            }
         } else {
 
             if self.delegate?.filterDataForSection != nil {
