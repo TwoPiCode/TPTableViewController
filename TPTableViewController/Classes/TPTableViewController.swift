@@ -186,7 +186,7 @@ open class TPTableViewController: UIViewController {
 
         //        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
 
-        if !hasLoadedInitialData {
+        if !self.hasLoadedInitialData {
             self.refreshData()
         }
 
@@ -515,7 +515,7 @@ extension TPTableViewController: UITableViewDataSource {
 
         if self.paginationIsEnabled && self.delegate?.filterDataForSection == nil {
             return self.data.count
-        } else if paginationIsEnabled && self.delegate?.filterDataForSection != nil {
+        } else if self.paginationIsEnabled && self.delegate?.filterDataForSection != nil {
             return self.delegate?.filterDataForSection?(data: self.data,
                                                         section: section).count ?? 0
         } else {
@@ -533,7 +533,7 @@ extension TPTableViewController: UITableViewDataSource {
 
         if self.paginationIsEnabled && self.delegate?.filterDataForSection == nil {
             item = self.data[indexPath.row]
-        }else if paginationIsEnabled && self.delegate?.filterDataForSection != nil {
+        } else if self.paginationIsEnabled && self.delegate?.filterDataForSection != nil {
             if self.delegate?.filterDataForSection != nil {
                 if let unwrappedItem = self.delegate?.filterDataForSection?(data: data,
                                                                             section: indexPath.section)[indexPath.row] {
@@ -567,7 +567,23 @@ extension TPTableViewController: UITableViewDataSource {
 
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 
-        if self.paginationIsEnabled {
+        if self.delegate?.filterDataForSection != nil {
+            let lastSectionIndex = tableView.numberOfSections - 1
+
+            guard lastSectionIndex == indexPath.section else {
+                return
+            }
+
+            guard let lastSectionData = self.delegate?.filterDataForSection?(data: data,
+                                                                             section: indexPath.section) else {
+                                                                                //                log.warning("could not get last section data")
+                                                                                return
+            }
+
+            if indexPath.row == lastSectionData.count - 1 {
+                self.loadNextPage()
+            }
+        } else if self.paginationIsEnabled {
             // Check if we're displaying the last item. If we are, attempt to fetch the
             // next page of results
 
