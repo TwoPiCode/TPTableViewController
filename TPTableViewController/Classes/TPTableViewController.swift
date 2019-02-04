@@ -45,6 +45,13 @@ open class TPTableViewController: UIViewController {
         }
     }
 
+    public var navBarHeight: CGFloat {
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        let navBarHeight = self.navigationController?.navigationBar.frame.height ?? 0
+        let searchBarHeight = searchController.searchBar.frame.height
+        return statusBarHeight + navBarHeight + searchBarHeight
+    }
+
     // TODO: enable switching
     public var scopeStrings: [String] = []
     public var segmentedControl = UISegmentedControl()
@@ -184,13 +191,9 @@ open class TPTableViewController: UIViewController {
         //        self.searchController.searchBar.layer.borderWidth = 1
         //        self.searchController.searchBar.layer.borderColor = self.backgroundColor.cgColor
 
-        //        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-
         if !self.hasLoadedInitialData {
             self.refreshData()
         }
-
-        //        }
     }
 
     func layoutView() {
@@ -495,6 +498,14 @@ open class TPTableViewController: UIViewController {
         self.isFetchingData = false
         let pullToRefreshAttributedTitle = NSAttributedString(string: self.pullToRefreshText,
                                                               attributes: [:])
+
+        // Not great code, but it fixes the offset for now.
+        // Will investigate further, later on.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
+            let height = self.navBarHeight
+            self.tableView.setContentOffset(CGPoint(x: 0, y: -height), animated: true)
+        }
+
         DispatchQueue.main.async {
             self.refreshControl.attributedTitle = pullToRefreshAttributedTitle
             self.refreshControl.endRefreshing()
