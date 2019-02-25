@@ -21,7 +21,7 @@ open class TPTableViewController: UIViewController {
                 hasLoadedInitialData = true
             }
             if paginationIsEnabled {
-                self.filteredData = self.data
+                filteredData = data
             }
             DispatchQueue.main.async {
                 if !self.paginationIsEnabled {
@@ -67,7 +67,7 @@ open class TPTableViewController: UIViewController {
     public var noMoreResults = false
     public let itemsPerPage = 20
     var pagesLoaded: Int {
-        return Int(self.data?.count ?? 0 / self.itemsPerPage)
+        return Int(data?.count ?? 0 / itemsPerPage)
     }
 
     public var deselectCellOnWillAppear = true
@@ -97,7 +97,7 @@ open class TPTableViewController: UIViewController {
     }
 
     var refreshingDataText: String {
-        if self.delegate?.itemName != nil, let text = delegate?.itemName?() {
+        if delegate?.itemName != nil, let text = delegate?.itemName() {
             return "Loading \(text.lowercased())..."
         } else {
             return "Loading data..."
@@ -391,11 +391,12 @@ open class TPTableViewController: UIViewController {
         var noDataText = "No data"
         var noResults = false
 
-        if self.searchController.searchBar.text == "" && self.data?.count == 0 {
-            noDataText = self.delegate?.textForNoData() ?? "No data"
+        if searchController.searchBar.text == "" && data?.count == 0 {
+            noDataText = delegate?.textForNoData() ?? "No data"
             noResults = true
-        } else if self.data?.count == 0 {
-            noDataText = self.delegate?.textForNoData() ?? "No data"
+        } else if data?.count == 0 {
+            noDataText = delegate?.textForNoData() ?? "No data"
+
             if let searchText = searchController.searchBar.text {
                 noDataText += " matching the search term \"\(searchText)\""
             }
@@ -405,11 +406,11 @@ open class TPTableViewController: UIViewController {
         let isHidden = !noResults || isFetchingData
 
         if noResults {
-            self.setNoContentLabel(isHidden: isHidden, text: noDataText)
+            setNoContentLabel(isHidden: isHidden, text: noDataText)
         }
     }
 
-    public func setNoContentLabel(isHidden: Bool, text: String?, delay: Bool = false) {
+    public func setNoContentLabel(isHidden: Bool, text: String?, delay _: Bool = false) {
         if !isHidden {
             let tableViewSize = tableView.bounds.size
             let labelFrame = CGRect(x: 0, y: 0, width: tableViewSize.width - 32, height: tableViewSize.height)
@@ -419,7 +420,7 @@ open class TPTableViewController: UIViewController {
             noDataLabel.textAlignment = NSTextAlignment.center
             noDataLabel.numberOfLines = 0
 
-            self.tableView.backgroundView = noDataLabel
+            tableView.backgroundView = noDataLabel
         } else {
             DispatchQueue.main.async {
                 self.tableView.backgroundView = nil
@@ -428,18 +429,6 @@ open class TPTableViewController: UIViewController {
     }
 
     func setInitialLoadingLabel() {
-//        let tableViewSize = tableView.bounds.size
-//        let labelFrame = CGRect(x: 0, y: 0, width: tableViewSize.width - 32, height: tableViewSize.height)
-//        let noDataLabel = UILabel(frame: labelFrame)
-//        noDataLabel.text = "\(refreshingDataText)..."
-//        noDataLabel.textColor = UIColor.darkGray
-//        noDataLabel.textAlignment = NSTextAlignment.center
-//        noDataLabel.numberOfLines = 0
-//
-//        DispatchQueue.main.async {
-//            self.tableView.backgroundView = noDataLabel
-//        }
-
         setNoContentLabel()
     }
 
@@ -473,10 +462,8 @@ open class TPTableViewController: UIViewController {
 
         noMoreResults = false
 
-        self.setNoContentLabel()
-
         if paginationIsEnabled {
-            self.setNoContentLabel(isHidden: false, text: refreshingDataText)
+            setNoContentLabel()
             delegate?.loadPaginatedData(page: 1, limit: itemsPerPage, query: searchTerms) {
                 DispatchQueue.main.async {
                     self.setNoContentLabel()
@@ -491,7 +478,7 @@ open class TPTableViewController: UIViewController {
         }
 
         guard hasLoadedInitialData else {
-            self.setInitialLoadingLabel()
+            setInitialLoadingLabel()
             return
         }
     }
@@ -509,7 +496,7 @@ open class TPTableViewController: UIViewController {
     }
 
     func filterAndSetData() {
-        self.filteredData = self.data?.filter({ (item) -> Bool in
+        filteredData = data?.filter({ (item) -> Bool in
             item.matchesQuery(query: searchTerms)
         })
     }
@@ -519,21 +506,21 @@ extension TPTableViewController: UITableViewDataSource {
     public func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         setNoContentLabel()
 
-        guard let data = self.data else { return 0 }
-        guard let filteredData = self.filteredData else { return 0 }
+        guard let data = data else { return 0 }
+        guard let filteredData = filteredData else { return 0 }
 
-        if self.paginationIsEnabled && tableView.numberOfSections != 1 {
-            return self.data?.count ?? 0
-        } else if self.paginationIsEnabled && tableView.numberOfSections != 1 {
-            return self.delegate?.filterDataForSection?(data: data,
-                                                        section: section).count ?? 0
+        if paginationIsEnabled, tableView.numberOfSections == 1 {
+            return data.count
+        } else if paginationIsEnabled, tableView.numberOfSections != 1 {
+            return delegate?.filterDataForSection(data: data,
+                                                  section: section).count ?? 0
         } else {
             if tableView.numberOfSections != 1 {
-                return self.delegate?.filterDataForSection?(data: filteredData,
-                                                            section: section).count ?? 0
+                return delegate?.filterDataForSection(data: filteredData,
+                                                      section: section).count ?? 0
             }
 
-            return self.filteredData?.count ?? 0
+            return filteredData.count
         }
     }
 
@@ -576,10 +563,10 @@ extension TPTableViewController: UITableViewDataSource {
                                         item: item) ?? UITableViewCell()
     }
 
-    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let data = data else { return }
-
     public func tableView(_ tableView: UITableView, willDisplay _: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let data = data else { return }
+        guard let filteredData = filteredData else { return }
+
         if tableView.numberOfSections != 1 {
             let lastSectionIndex = tableView.numberOfSections - 1
 
@@ -609,19 +596,18 @@ extension TPTableViewController: UITableViewDataSource {
 }
 
 extension TPTableViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.didSelectRowAt(indexPath)
     }
 }
 
 extension TPTableViewController: UISearchBarDelegate {
-    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    public func searchBar(_: UISearchBar, textDidChange searchText: String) {
         guard let data = data else { return }
-
-        if self.paginationIsEnabled {
+        if paginationIsEnabled {
             isLoadingData = true
             noMoreResults = false
-            self.setNoContentLabel(isHidden: false, text: refreshingDataText)
+            setNoContentLabel(isHidden: false, text: refreshingDataText)
             delegate?.loadPaginatedData(page: 1, limit: itemsPerPage, query: searchText, {
                 DispatchQueue.main.async {
                     self.setNoContentLabel()
@@ -631,7 +617,7 @@ extension TPTableViewController: UISearchBarDelegate {
 
             searchTerms = searchText
         } else {
-            self.filteredData = data.filter({ (item) -> Bool in
+            filteredData = data.filter({ (item) -> Bool in
                 item.matchesQuery(query: searchText)
             })
         }
