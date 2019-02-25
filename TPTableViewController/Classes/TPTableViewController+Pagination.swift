@@ -40,7 +40,7 @@ extension TPTableViewController {
             }
 
             // Check that we haven't hit the last result
-            if self.data.count != (page * self.itemsPerPage) {
+            if self.data?.count != (page * self.itemsPerPage) {
                 self.noMoreResults = true
             }
 
