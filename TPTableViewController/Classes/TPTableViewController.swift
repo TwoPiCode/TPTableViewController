@@ -368,12 +368,12 @@ open class TPTableViewController: UIViewController {
                                delay: 0,
                                options: UIView.AnimationOptions.beginFromCurrentState,
                                animations: {
-                                   self.refreshControl.attributedTitle = NSAttributedString(string: self.refreshingDataText,
-                                                                                            attributes: [:])
-                                   let refreshControlHeight = self.refreshControl.frame.height
-                                   self.tableView.contentOffset = CGPoint(x: 0, y: -refreshControlHeight * 4)
+                                self.refreshControl.attributedTitle = NSAttributedString(string: self.refreshingDataText,
+                                                                                         attributes: [:])
+                                let refreshControlHeight = self.refreshControl.frame.height
+                                self.tableView.contentOffset = CGPoint(x: 0, y: -refreshControlHeight * 4)
 
-                               },
+                },
                                completion: nil)
             }
         }
@@ -381,6 +381,11 @@ open class TPTableViewController: UIViewController {
 
     // TODO: not really sure if this needs to be public
     public func setNoContentLabel() {
+
+        guard data?.isEmpty ?? true else {
+            setNoContentLabel(isHidden: true, text: "")
+            return
+        }
         var noDataText = "No data"
         var noResults = false
 
@@ -581,7 +586,7 @@ extension TPTableViewController: UITableViewDataSource {
 
             guard let lastSectionData = self.delegate?.filterDataForSection?(data: data,
                                                                              section: indexPath.section) else {
-                return
+                                                                                return
             }
 
             if indexPath.row == lastSectionData.count - 1 {
