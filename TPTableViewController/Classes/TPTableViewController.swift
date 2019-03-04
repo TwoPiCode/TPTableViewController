@@ -68,7 +68,7 @@ open class TPTableViewController: UIViewController {
     public var noMoreResults = false
     public let itemsPerPage = 20
     var pagesLoaded: Int {
-        return Int(self.data?.count ?? 0 / self.itemsPerPage)
+        return Int((data?.count ?? 0) / itemsPerPage)
     }
 
     public var deselectCellOnWillAppear = true
