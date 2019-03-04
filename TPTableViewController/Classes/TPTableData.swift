@@ -20,7 +20,7 @@ open class TPTableData: NSObject {
         return self.title
     }
 
-    open func matchesQuery(query: String) -> Bool {
+    open func matchesQuery(query _: String) -> Bool {
         return true
     }
 }

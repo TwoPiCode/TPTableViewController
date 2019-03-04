@@ -11,7 +11,6 @@
 import UIKit
 
 open class TPTableViewController: UIViewController {
-
     public var tableView = UITableView()
 
     public var backgroundColor = UIColor.groupTableViewBackground
@@ -22,7 +21,7 @@ open class TPTableViewController: UIViewController {
                 hasLoadedInitialData = true
             }
             if paginationIsEnabled {
-                self.filteredData = self.data
+                filteredData = data
             }
             DispatchQueue.main.async {
                 if !self.paginationIsEnabled {
@@ -76,15 +75,13 @@ open class TPTableViewController: UIViewController {
     var hasLoadedInitialData = false
 
     open weak var delegate: TPTableViewDelegate? {
-        didSet {
-
-        }
+        didSet {}
     }
 
     open weak var segmentedControlDelegate: TPTableViewSegmentedControlDelegate?
 
     var releaseToRefreshText: String {
-        if self.delegate?.itemName != nil, let text = delegate?.itemName?() {
+        if delegate?.itemName != nil, let text = delegate?.itemName?() {
             return "Release to refresh \(text.lowercased())"
         } else {
             return "Release to refresh data"
@@ -92,7 +89,7 @@ open class TPTableViewController: UIViewController {
     }
 
     var pullToRefreshText: String {
-        if self.delegate?.itemName != nil, let text = delegate?.itemName?() {
+        if delegate?.itemName != nil, let text = delegate?.itemName?() {
             return "Pull to refresh \(text.lowercased())"
         } else {
             return "Pull to refresh data"
@@ -100,7 +97,7 @@ open class TPTableViewController: UIViewController {
     }
 
     var refreshingDataText: String {
-        if self.delegate?.itemName != nil, let text = delegate?.itemName?() {
+        if delegate?.itemName != nil, let text = delegate?.itemName?() {
             return "Loading \(text.lowercased())..."
         } else {
             return "Loading data..."
@@ -115,6 +112,7 @@ open class TPTableViewController: UIViewController {
             }
         }
     }
+
     public var isFetchingData = false
 
     open weak var dataSource: TPTableViewDataSource?
@@ -134,7 +132,7 @@ open class TPTableViewController: UIViewController {
         self.style = style
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -145,7 +143,7 @@ open class TPTableViewController: UIViewController {
             title = itemName
         }
 
-        self.setupSearchBar()
+        setupSearchBar()
     }
 
     var hasSetupTable = false
@@ -153,13 +151,13 @@ open class TPTableViewController: UIViewController {
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if !self.hasSetupTable {
-            self.hasSetupTable = true
+        if !hasSetupTable {
+            hasSetupTable = true
 
-            self.setupTableView()
-            self.setupRefreshControl()
+            setupTableView()
+            setupRefreshControl()
 
-            self.layoutView()
+            layoutView()
         }
 
         if deselectCellOnWillAppear, let selectionIndex = tableView.indexPathForSelectedRow {
@@ -191,25 +189,22 @@ open class TPTableViewController: UIViewController {
 
         //        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
 
-        if !self.hasLoadedInitialData {
-            self.refreshData()
+        if !hasLoadedInitialData {
+            refreshData()
         }
 
         //        }
     }
 
     func layoutView() {
-
         // these constraints are always needed
-        self.tableView.translatesAutoresizingMaskIntoConstraints = false
-        self.tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        self.tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        self.tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
         // if iOS <11 then we need to layout the searchbar
-        if #available(iOS 11, *) {
-
-        } else {
+        if #available(iOS 11, *) {} else {
             let searchBar = searchController.searchBar
             searchWrapperView.topAnchor.constraint(equalTo: searchBar.topAnchor).isActive = true
             searchWrapperView.leftAnchor.constraint(equalTo: searchBar.leftAnchor).isActive = true
@@ -222,94 +217,94 @@ open class TPTableViewController: UIViewController {
         }
 
         // if we're showing a scope selector, then we want to add it below the navbar
-        if self.scopeStrings.count != 0 {
-            self.segmentedControlWrapperView.translatesAutoresizingMaskIntoConstraints = false
-            self.segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        if scopeStrings.count != 0 {
+            segmentedControlWrapperView.translatesAutoresizingMaskIntoConstraints = false
+            segmentedControl.translatesAutoresizingMaskIntoConstraints = false
 
-            self.segmentedControlWrapperView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-            self.segmentedControlWrapperView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+            segmentedControlWrapperView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+            segmentedControlWrapperView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
 
             // If iOS >= 11 searchbar bottom is the same as topAnchor
             if #available(iOS 11, *) {
                 segmentedControlWrapperView.topAnchor.constraint(equalTo: topLayoutGuide.topAnchor).isActive = true
             } else {
-                self.segmentedControlWrapperView.topAnchor.constraint(equalTo: self.searchWrapperView.bottomAnchor).isActive = true
+                segmentedControlWrapperView.topAnchor.constraint(equalTo: searchWrapperView.bottomAnchor).isActive = true
             }
 
-            self.segmentedControl.centerXAnchor.constraint(equalTo: self.segmentedControlWrapperView.centerXAnchor).isActive = true
-            self.segmentedControl.centerYAnchor.constraint(equalTo: self.segmentedControlWrapperView.centerYAnchor).isActive = true
-            self.segmentedControl.topAnchor.constraint(equalTo: self.segmentedControlWrapperView.topAnchor, constant: 8).isActive = true
-            self.segmentedControl.bottomAnchor.constraint(equalTo: self.segmentedControlWrapperView.bottomAnchor, constant: -8).isActive = true
-            self.segmentedControl.leftAnchor.constraint(equalTo: self.segmentedControlWrapperView.leftAnchor, constant: 8).isActive = true
-            self.segmentedControl.rightAnchor.constraint(equalTo: self.segmentedControlWrapperView.rightAnchor, constant: -8).isActive = true
+            segmentedControl.centerXAnchor.constraint(equalTo: segmentedControlWrapperView.centerXAnchor).isActive = true
+            segmentedControl.centerYAnchor.constraint(equalTo: segmentedControlWrapperView.centerYAnchor).isActive = true
+            segmentedControl.topAnchor.constraint(equalTo: segmentedControlWrapperView.topAnchor, constant: 8).isActive = true
+            segmentedControl.bottomAnchor.constraint(equalTo: segmentedControlWrapperView.bottomAnchor, constant: -8).isActive = true
+            segmentedControl.leftAnchor.constraint(equalTo: segmentedControlWrapperView.leftAnchor, constant: 8).isActive = true
+            segmentedControl.rightAnchor.constraint(equalTo: segmentedControlWrapperView.rightAnchor, constant: -8).isActive = true
 
-            self.tableView.topAnchor.constraint(equalTo: self.segmentedControlWrapperView.bottomAnchor).isActive = true
+            tableView.topAnchor.constraint(equalTo: segmentedControlWrapperView.bottomAnchor).isActive = true
         } else {
             // tableview top is searchbar bottom
             // If iOS >= 11 searchbar bottom is the same as topAnchor
             if #available(iOS 11, *) {
                 tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
             } else {
-                self.tableView.topAnchor.constraint(equalTo: self.searchWrapperView.bottomAnchor).isActive = true
+                tableView.topAnchor.constraint(equalTo: searchWrapperView.bottomAnchor).isActive = true
             }
         }
     }
 
     func setupTableView() {
-        self.tableView = UITableView(frame: self.view.frame, style: self.style)
+        tableView = UITableView(frame: view.frame, style: style)
 
-        self.delegate?.registerReusableCell()
+        delegate?.registerReusableCell()
 
         // Setup tableview
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-        self.tableView.backgroundColor = UIColor.groupTableViewBackground
-        self.tableView.keyboardDismissMode = .onDrag
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = UIColor.groupTableViewBackground
+        tableView.keyboardDismissMode = .onDrag
 
-        self.tableView.rowHeight = UITableView.automaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         // It'd be a good idea to set this in the subclasses, and make sure this doesn't override it
-        self.tableView.estimatedRowHeight = 44
+        tableView.estimatedRowHeight = 44
 
-        let footerFrame = CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: 1)
-        self.tableView.tableFooterView = UIView(frame: footerFrame)
+        let footerFrame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1)
+        tableView.tableFooterView = UIView(frame: footerFrame)
 
         // Start: Add tableview, add constraints
-        view.addSubview(self.tableView)
+        view.addSubview(tableView)
 
-        if self.scopeStrings.count != 0 {
-            self.setupSegmentedControl()
+        if scopeStrings.count != 0 {
+            setupSegmentedControl()
         }
 
-        self.tableView.allowsSelection = self.delegate?.didSelectRowAt != nil
+        tableView.allowsSelection = delegate?.didSelectRowAt != nil
     }
 
     func setupSegmentedControl() {
-        self.segmentedControlWrapperView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) // will get set in autolayout
+        segmentedControlWrapperView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) // will get set in autolayout
 
-        self.segmentedControlWrapperView.backgroundColor = backgroundColor
-        view.addSubview(self.segmentedControlWrapperView)
+        segmentedControlWrapperView.backgroundColor = backgroundColor
+        view.addSubview(segmentedControlWrapperView)
 
-        self.segmentedControl = UISegmentedControl(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
-        for (index, scope) in self.scopeStrings.enumerated() {
-            self.segmentedControl.insertSegment(withTitle: scope, at: index, animated: false)
+        segmentedControl = UISegmentedControl(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+        for (index, scope) in scopeStrings.enumerated() {
+            segmentedControl.insertSegment(withTitle: scope, at: index, animated: false)
         }
-        self.segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.selectedSegmentIndex = 0
 
-        self.segmentedControl.tintColor = UIColor(red: 0.92, green: 0.67, blue: 0.01, alpha: 1.00)
-        self.segmentedControl.addTarget(self, action: #selector(self.segmentedControlDidChange(_:)), for: .valueChanged)
+        segmentedControl.tintColor = UIColor(red: 0.92, green: 0.67, blue: 0.01, alpha: 1.00)
+        segmentedControl.addTarget(self, action: #selector(segmentedControlDidChange(_:)), for: .valueChanged)
 
-        self.segmentedControlWrapperView.addSubview(self.segmentedControl)
+        segmentedControlWrapperView.addSubview(segmentedControl)
 
         edgesForExtendedLayout = [.bottom, .left, .right]
     }
 
     // Add search for iOS10
     func setupSearchbariOS10() {
-        self.searchWrapperView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) // will get set in autolayout
-        self.searchWrapperView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(self.searchWrapperView)
+        searchWrapperView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) // will get set in autolayout
+        searchWrapperView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(searchWrapperView)
 
-        let searchBar = self.searchController.searchBar
+        let searchBar = searchController.searchBar
         searchController.searchBar.barTintColor = backgroundColor
         searchController.searchBar.backgroundColor = backgroundColor
         searchController.searchBar.isTranslucent = false
@@ -320,24 +315,24 @@ open class TPTableViewController: UIViewController {
     }
 
     @objc func segmentedControlDidChange(_ sender: UISegmentedControl) {
-        self.segmentedControlDelegate?.segmentedControlDidChange?(index: sender.selectedSegmentIndex, nil)
+        segmentedControlDelegate?.segmentedControlDidChange?(index: sender.selectedSegmentIndex, nil)
     }
 
     public func setupSearchBar() {
         // TODO: check if search bar should be added
-        self.searchController = UISearchController(searchResultsController: nil)
-        self.searchController.searchBar.delegate = self
-        self.searchController.hidesNavigationBarDuringPresentation = false
-        self.searchController.dimsBackgroundDuringPresentation = false
-        self.searchController.searchBar.sizeToFit()
-        self.searchController.delegate = self
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.delegate = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.sizeToFit()
+        searchController.delegate = self
 
         if #available(iOS 11, *) {
             navigationItem.searchController = searchController
             // Default behaviour is searchbar is hidden until you pull down, so persist it
             navigationItem.hidesSearchBarWhenScrolling = false
         } else {
-            self.setupSearchbariOS10()
+            setupSearchbariOS10()
         }
 
         definesPresentationContext = true
@@ -348,14 +343,14 @@ open class TPTableViewController: UIViewController {
     }
 
     func setupRefreshControl() {
-        self.refreshControl.layer.zPosition = -1 // hide behind tableview cells
-        self.refreshControl.attributedTitle = NSAttributedString(string: self.pullToRefreshText, attributes: [:])
-        self.refreshControl.addTarget(self, action: #selector(self.refreshControlChanged), for: .valueChanged)
+        refreshControl.layer.zPosition = -1 // hide behind tableview cells
+        refreshControl.attributedTitle = NSAttributedString(string: pullToRefreshText, attributes: [:])
+        refreshControl.addTarget(self, action: #selector(refreshControlChanged), for: .valueChanged)
 
-        self.tableView.addSubview(self.refreshControl)
+        tableView.addSubview(refreshControl)
 
         // this is important for getting the layout right, otherwise the refresh controls text can get cut off
-        self.extendedLayoutIncludesOpaqueBars = true
+        extendedLayoutIncludesOpaqueBars = true
 
         //        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
         //            self.manuallyShowRefreshControl()
@@ -373,12 +368,12 @@ open class TPTableViewController: UIViewController {
                                delay: 0,
                                options: UIView.AnimationOptions.beginFromCurrentState,
                                animations: {
-                                self.refreshControl.attributedTitle = NSAttributedString(string: self.refreshingDataText,
-                                                                                         attributes: [:])
-                                let refreshControlHeight = self.refreshControl.frame.height
-                                self.tableView.contentOffset = CGPoint(x: 0, y: -refreshControlHeight * 4)
+                                   self.refreshControl.attributedTitle = NSAttributedString(string: self.refreshingDataText,
+                                                                                            attributes: [:])
+                                   let refreshControlHeight = self.refreshControl.frame.height
+                                   self.tableView.contentOffset = CGPoint(x: 0, y: -refreshControlHeight * 4)
 
-                },
+                               },
                                completion: nil)
             }
         }
@@ -389,11 +384,11 @@ open class TPTableViewController: UIViewController {
         var noDataText = "No data"
         var noResults = false
 
-        if self.searchController.searchBar.text == "" && self.data?.count == 0 {
-            noDataText = self.delegate?.textForNoData() ?? "No data"
+        if searchController.searchBar.text == "" && data?.count == 0 {
+            noDataText = delegate?.textForNoData() ?? "No data"
             noResults = true
-        } else if self.data?.count == 0 {
-            noDataText = self.delegate?.textForNoData() ?? "No data"
+        } else if data?.count == 0 {
+            noDataText = delegate?.textForNoData() ?? "No data"
             if let searchText = searchController.searchBar.text {
                 noDataText += " matching the search term \"\(searchText)\""
             }
@@ -403,11 +398,11 @@ open class TPTableViewController: UIViewController {
         let isHidden = !noResults || isFetchingData
 
         if noResults {
-            self.setNoContentLabel(isHidden: isHidden, text: noDataText)
+            setNoContentLabel(isHidden: isHidden, text: noDataText)
         }
     }
 
-    public func setNoContentLabel(isHidden: Bool, text: String?, delay: Bool = false) {
+    public func setNoContentLabel(isHidden: Bool, text: String?, delay _: Bool = false) {
         if !isHidden {
             let tableViewSize = tableView.bounds.size
             let labelFrame = CGRect(x: 0, y: 0, width: tableViewSize.width - 32, height: tableViewSize.height)
@@ -417,7 +412,7 @@ open class TPTableViewController: UIViewController {
             noDataLabel.textAlignment = NSTextAlignment.center
             noDataLabel.numberOfLines = 0
 
-            self.tableView.backgroundView = noDataLabel
+            tableView.backgroundView = noDataLabel
         } else {
             DispatchQueue.main.async {
                 self.tableView.backgroundView = nil
@@ -442,39 +437,40 @@ open class TPTableViewController: UIViewController {
     }
 
     // MARK: - Pull to refresh
+
     @objc func refreshControlChanged() {
-        if !self.tableView.isDragging {
-            self.refreshData()
+        if !tableView.isDragging {
+            refreshData()
         } else {
             let releaseToRefreshText = NSAttributedString(string: self.releaseToRefreshText, attributes: [:])
-            self.refreshControl.attributedTitle = releaseToRefreshText
+            refreshControl.attributedTitle = releaseToRefreshText
         }
     }
 
-    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if self.refreshControl.isRefreshing {
-            self.refreshData()
+    open func scrollViewDidEndDragging(_: UIScrollView, willDecelerate _: Bool) {
+        if refreshControl.isRefreshing {
+            refreshData()
         }
     }
 
     // Happens when view loads for the first time or the user drags down to refresh
     public func refreshData() {
-        self.isFetchingData = true
-        self.setNoContentLabel()
+        isFetchingData = true
+        setNoContentLabel()
 
-        self.refreshControl.layoutIfNeeded()
-        self.refreshControl.beginRefreshing()
+        refreshControl.layoutIfNeeded()
+        refreshControl.beginRefreshing()
 
-        let refreshingAttributedTitle = NSAttributedString(string: self.refreshingDataText, attributes: [:])
+        let refreshingAttributedTitle = NSAttributedString(string: refreshingDataText, attributes: [:])
         refreshControl.attributedTitle = refreshingAttributedTitle
 
         noMoreResults = false
 
-        self.setNoContentLabel()
+        setNoContentLabel()
 
-        if self.paginationIsEnabled {
-            self.setNoContentLabel(isHidden: false, text: refreshingDataText)
-            self.delegate?.loadPaginatedData?(page: 1, limit: self.itemsPerPage, query: self.searchTerms) {
+        if paginationIsEnabled {
+            setNoContentLabel(isHidden: false, text: refreshingDataText)
+            delegate?.loadPaginatedData?(page: 1, limit: itemsPerPage, query: searchTerms) {
                 DispatchQueue.main.async {
                     self.setNoContentLabel()
                     self.loadingDataEnded()
@@ -482,20 +478,20 @@ open class TPTableViewController: UIViewController {
             }
         } else {
             // Load all the data
-            self.delegate?.loadData?({
+            delegate?.loadData?({
                 self.loadingDataEnded()
             })
         }
 
         guard hasLoadedInitialData else {
-            self.setInitialLoadingLabel()
+            setInitialLoadingLabel()
             return
         }
     }
 
     func loadingDataEnded() {
-        self.isFetchingData = false
-        let pullToRefreshAttributedTitle = NSAttributedString(string: self.pullToRefreshText,
+        isFetchingData = false
+        let pullToRefreshAttributedTitle = NSAttributedString(string: pullToRefreshText,
                                                               attributes: [:])
         DispatchQueue.main.async {
             self.refreshControl.attributedTitle = pullToRefreshAttributedTitle
@@ -506,28 +502,28 @@ open class TPTableViewController: UIViewController {
     }
 
     func filterAndSetData() {
-        self.filteredData = self.data?.filter({ (item) -> Bool in
+        filteredData = data?.filter({ (item) -> Bool in
             item.matchesQuery(query: searchTerms)
         })
     }
 }
 
 extension TPTableViewController: UITableViewDataSource {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.setNoContentLabel()
+    public func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        setNoContentLabel()
 
         guard let data = self.data else { return 0 }
         guard let filteredData = self.filteredData else { return 0 }
 
-        if self.paginationIsEnabled && self.delegate?.filterDataForSection == nil {
+        if paginationIsEnabled, delegate?.filterDataForSection == nil {
             return self.data?.count ?? 0
-        } else if self.paginationIsEnabled && self.delegate?.filterDataForSection != nil {
-            return self.delegate?.filterDataForSection?(data: data,
-                                                        section: section).count ?? 0
+        } else if paginationIsEnabled, delegate?.filterDataForSection != nil {
+            return delegate?.filterDataForSection?(data: data,
+                                                   section: section).count ?? 0
         } else {
-            if self.delegate?.filterDataForSection != nil {
-                return self.delegate?.filterDataForSection?(data: filteredData,
-                                                            section: section).count ?? 0
+            if delegate?.filterDataForSection != nil {
+                return delegate?.filterDataForSection?(data: filteredData,
+                                                       section: section).count ?? 0
             }
 
             return self.filteredData?.count ?? 0
@@ -540,10 +536,10 @@ extension TPTableViewController: UITableViewDataSource {
         guard let data = data else { return UITableViewCell() }
         guard let filteredData = filteredData else { return UITableViewCell() }
 
-        if self.paginationIsEnabled && self.delegate?.filterDataForSection == nil {
+        if paginationIsEnabled, delegate?.filterDataForSection == nil {
             item = data[indexPath.row]
-        } else if self.paginationIsEnabled && self.delegate?.filterDataForSection != nil {
-            if self.delegate?.filterDataForSection != nil {
+        } else if paginationIsEnabled, delegate?.filterDataForSection != nil {
+            if delegate?.filterDataForSection != nil {
                 if let unwrappedItem = self.delegate?.filterDataForSection?(data: data,
                                                                             section: indexPath.section)[indexPath.row] {
                     item = unwrappedItem
@@ -555,8 +551,7 @@ extension TPTableViewController: UITableViewDataSource {
                 item = data[indexPath.row]
             }
         } else {
-
-            if self.delegate?.filterDataForSection != nil {
+            if delegate?.filterDataForSection != nil {
                 if let unwrappedItem = self.delegate?.filterDataForSection?(data: filteredData,
                                                                             section: indexPath.section)[indexPath.row] {
                     item = unwrappedItem
@@ -569,15 +564,15 @@ extension TPTableViewController: UITableViewDataSource {
             }
         }
 
-        return self.dataSource?.cellForRowAt(tableView: tableView,
-                                             indexPath: indexPath,
-                                             item: item) ?? UITableViewCell()
+        return dataSource?.cellForRowAt(tableView: tableView,
+                                        indexPath: indexPath,
+                                        item: item) ?? UITableViewCell()
     }
 
-    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, willDisplay _: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let data = data else { return }
 
-        if self.delegate?.filterDataForSection != nil {
+        if delegate?.filterDataForSection != nil {
             let lastSectionIndex = tableView.numberOfSections - 1
 
             guard lastSectionIndex == indexPath.section else {
@@ -586,80 +581,80 @@ extension TPTableViewController: UITableViewDataSource {
 
             guard let lastSectionData = self.delegate?.filterDataForSection?(data: data,
                                                                              section: indexPath.section) else {
-                                                                                return
+                return
             }
 
             if indexPath.row == lastSectionData.count - 1 {
-                self.loadNextPage()
+                loadNextPage()
             }
-        } else if self.paginationIsEnabled {
+        } else if paginationIsEnabled {
             // Check if we're displaying the last item. If we are, attempt to fetch the
             // next page of results
 
             let lastItem = data.count - 1
             if indexPath.row == lastItem {
                 // Request more data
-                self.loadNextPage()
+                loadNextPage()
             }
         }
     }
 }
 
 extension TPTableViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.delegate?.didSelectRowAt(indexPath)
+    public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.didSelectRowAt(indexPath)
     }
 }
 
 extension TPTableViewController: UISearchBarDelegate {
-    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    public func searchBar(_: UISearchBar, textDidChange searchText: String) {
         guard let data = data else { return }
 
-        if self.paginationIsEnabled {
-            self.isLoadingData = true
-            self.noMoreResults = false
-            self.setNoContentLabel(isHidden: false, text: refreshingDataText)
-            self.delegate?.loadPaginatedData?(page: 1, limit: self.itemsPerPage, query: searchText, {
+        if paginationIsEnabled {
+            isLoadingData = true
+            noMoreResults = false
+            setNoContentLabel(isHidden: false, text: refreshingDataText)
+            delegate?.loadPaginatedData?(page: 1, limit: itemsPerPage, query: searchText, {
                 DispatchQueue.main.async {
                     self.setNoContentLabel()
                 }
                 self.isLoadingData = false
             })
 
-            self.searchTerms = searchText
+            searchTerms = searchText
         } else {
-            self.filteredData = data.filter({ (item) -> Bool in
+            filteredData = data.filter({ (item) -> Bool in
                 item.matchesQuery(query: searchText)
             })
         }
     }
 
-    open func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        self.searchWasCancelled = false
+    open func searchBarTextDidBeginEditing(_: UISearchBar) {
+        searchWasCancelled = false
     }
 
-    open func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.searchWasCancelled = true
+    open func searchBarCancelButtonClicked(_: UISearchBar) {
+        searchWasCancelled = true
 
-        self.noMoreResults = false
-        guard self.searchTerms != "" else {
+        noMoreResults = false
+        guard searchTerms != "" else {
             // don't need to search again
             return
         }
 
-        self.isLoadingData = true
+        isLoadingData = true
 
         DispatchQueue.main.async {
             self.searchController.searchBar.text = ""
         }
 
-        self.searchTerms = ""
+        searchTerms = ""
 
-        if self.paginationIsEnabled {
+        if paginationIsEnabled {
             DispatchQueue.main.async {
                 self.setNoContentLabel(isHidden: false, text: self.refreshingDataText)
             }
-            self.delegate?.loadPaginatedData?(page: 1, limit: self.itemsPerPage, query: "", {
+            delegate?.loadPaginatedData?(page: 1, limit: itemsPerPage, query: "", {
                 DispatchQueue.main.async {
                     self.setNoContentLabel()
                 }
@@ -674,22 +669,22 @@ extension TPTableViewController: UISearchBarDelegate {
     }
 
     open func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        if self.searchWasCancelled {
-            searchBar.text = self.searchTerms
-            if !self.paginationIsEnabled {
-                self.filteredData = self.data
-                self.tableView.reloadData()
+        if searchWasCancelled {
+            searchBar.text = searchTerms
+            if !paginationIsEnabled {
+                filteredData = data
+                tableView.reloadData()
             }
         } else {
-            self.searchTerms = searchBar.text ?? ""
+            searchTerms = searchBar.text ?? ""
         }
     }
 }
 
 extension TPTableViewController: UISearchControllerDelegate {
-    open func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        self.isLoadingData = true
-        self.filterDelegate?.didChangeScope?(scopeIndex: selectedScope, {
+    open func searchBar(_: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        isLoadingData = true
+        filterDelegate?.didChangeScope?(scopeIndex: selectedScope, {
             self.isLoadingData = false
         })
     }
@@ -719,13 +714,12 @@ public protocol TPTableViewDataSource: class {
 }
 
 extension UISearchBar {
-
     private var textField: UITextField? {
         return subviews.first?.subviews.compactMap { $0 as? UITextField }.first
     }
 
     private var activityIndicator: UIActivityIndicatorView? {
-        return self.textField?.leftView?.subviews.compactMap { $0 as? UIActivityIndicatorView }.first
+        return textField?.leftView?.subviews.compactMap { $0 as? UIActivityIndicatorView }.first
     }
 
     private var searchIcon: UIImage? {
@@ -735,10 +729,8 @@ extension UISearchBar {
 
     var isLoading: Bool {
         get {
-            return self.activityIndicator != nil
-        } set {
-
-        }
+            return activityIndicator != nil
+        } set {}
 
         //        get {
         //            return self.activityIndicator != nil
@@ -767,12 +759,10 @@ extension UISearchBar {
 }
 
 extension UIViewController {
-
     /// Calculate top distance with "navigationBar" and "statusBar" by adding a
     /// subview constraint to navigationBar or to topAnchor or superview
     /// - Returns: The real distance between topViewController and Bottom navigationBar
     func calculateTopDistance() -> CGFloat {
-
         /// Create view for misure
         let misureView: UIView = UIView()
         misureView.backgroundColor = .clear
@@ -799,7 +789,5 @@ extension UIViewController {
         misureView.removeFromSuperview()
 
         return distance
-
     }
-
 }

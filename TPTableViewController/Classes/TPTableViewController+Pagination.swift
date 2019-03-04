@@ -11,17 +11,17 @@ extension TPTableViewController {
         var page = 1
         let query = searchController.searchBar.text ?? ""
 
-        if self.previousQuery == query {
+        if previousQuery == query {
             // if the search query hasn't changed, we want to load the next page of results
             guard !noMoreResults else {
                 // there are no more results to fetch
 
                 return
             }
-            page = self.pagesLoaded + 1
+            page = pagesLoaded + 1
         } else {
             // otherwise don't prevent the API from loading more results
-            self.noMoreResults = false
+            noMoreResults = false
         }
 
         // show an activity indicator in the table footer
@@ -32,8 +32,7 @@ extension TPTableViewController {
         tableView.tableFooterView = spinner
         tableView.tableFooterView?.isHidden = false
 
-        self.delegate?.loadPaginatedData?(page: page, limit: itemsPerPage, query: query, {
-
+        delegate?.loadPaginatedData?(page: page, limit: itemsPerPage, query: query, {
             DispatchQueue.main.async {
                 let footerFrame = CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: 1)
                 self.tableView.tableFooterView = UIView(frame: footerFrame)
