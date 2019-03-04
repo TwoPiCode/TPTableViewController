@@ -67,7 +67,7 @@ open class TPTableViewController: UIViewController {
     public var noMoreResults = false
     public let itemsPerPage = 20
     var pagesLoaded: Int {
-        return Int(data?.count ?? 0 / itemsPerPage)
+        return Int((data?.count ?? 0) / itemsPerPage)
     }
 
     public var deselectCellOnWillAppear = true
@@ -461,6 +461,8 @@ open class TPTableViewController: UIViewController {
         refreshControl.attributedTitle = refreshingAttributedTitle
 
         noMoreResults = false
+
+        setNoContentLabel()
 
         if paginationIsEnabled {
             setNoContentLabel()
