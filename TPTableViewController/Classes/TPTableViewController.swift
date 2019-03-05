@@ -460,7 +460,6 @@ open class TPTableViewController: UIViewController {
 
     // Happens when view loads for the first time or the user drags down to refresh
     public func refreshData() {
-        isLoadingData = true
         setNoContentLabel()
 
         refreshControl.layoutIfNeeded()
@@ -473,9 +472,12 @@ open class TPTableViewController: UIViewController {
 
         setNoContentLabel()
 
+        isLoadingData = true
         if paginationIsEnabled {
+            isLoadingData = true
             setNoContentLabel(isHidden: false, text: refreshingDataText)
             delegate?.loadPaginatedData?(page: 1, limit: itemsPerPage, query: searchTerms) {
+                self.isLoadingData = false
                 DispatchQueue.main.async {
                     self.setNoContentLabel()
                     self.loadingDataEnded()
@@ -517,6 +519,12 @@ extension TPTableViewController: UITableViewDataSource {
     public func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let data = self.data else { return 0 }
         guard let filteredData = self.filteredData else { return 0 }
+
+        if !data.isEmpty {
+            DispatchQueue.main.async {
+                self.tableView.backgroundView = nil
+            }
+        }
 
         if paginationIsEnabled, delegate?.filterDataForSection == nil {
             return self.data?.count ?? 0
@@ -618,10 +626,10 @@ extension TPTableViewController: UISearchBarDelegate {
             noMoreResults = false
             setNoContentLabel(isHidden: false, text: refreshingDataText)
             delegate?.loadPaginatedData?(page: 1, limit: itemsPerPage, query: searchText, {
+                self.isLoadingData = false
                 DispatchQueue.main.async {
                     self.setNoContentLabel()
                 }
-                self.isLoadingData = false
             })
 
             searchTerms = searchText
@@ -657,7 +665,9 @@ extension TPTableViewController: UISearchBarDelegate {
             DispatchQueue.main.async {
                 self.setNoContentLabel(isHidden: false, text: self.refreshingDataText)
             }
+            isLoadingData = true
             delegate?.loadPaginatedData?(page: 1, limit: itemsPerPage, query: "", {
+                self.isLoadingData = false
                 DispatchQueue.main.async {
                     self.setNoContentLabel()
                 }
