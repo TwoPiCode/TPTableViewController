@@ -37,7 +37,9 @@ open class TPTableViewController: UIViewController {
     public var filteredData: [TPTableData]? {
         didSet {
             DispatchQueue.main.async {
-                self.setNoContentLabel()
+                if !self.paginationIsEnabled {
+                    self.setNoContentLabel()
+                }
                 self.tableView.reloadData()
             }
         }
@@ -80,7 +82,7 @@ open class TPTableViewController: UIViewController {
 
     open weak var segmentedControlDelegate: TPTableViewSegmentedControlDelegate?
 
-    var releaseToRefreshText: String {
+    public var releaseToRefreshText: String {
         if delegate?.itemName != nil, let text = delegate?.itemName?() {
             return "Release to refresh \(text.lowercased())"
         } else {
@@ -88,7 +90,7 @@ open class TPTableViewController: UIViewController {
         }
     }
 
-    var pullToRefreshText: String {
+    public var pullToRefreshText: String {
         if delegate?.itemName != nil, let text = delegate?.itemName?() {
             return "Pull to refresh \(text.lowercased())"
         } else {
@@ -96,7 +98,7 @@ open class TPTableViewController: UIViewController {
         }
     }
 
-    var refreshingDataText: String {
+    public var refreshingDataText: String {
         if delegate?.itemName != nil, let text = delegate?.itemName?() {
             return "Loading \(text.lowercased())..."
         } else {
@@ -112,8 +114,6 @@ open class TPTableViewController: UIViewController {
             }
         }
     }
-
-    public var isFetchingData = false
 
     open weak var dataSource: TPTableViewDataSource?
     open weak var filterDelegate: TPTableViewFilterDelegate?
@@ -368,12 +368,12 @@ open class TPTableViewController: UIViewController {
                                delay: 0,
                                options: UIView.AnimationOptions.beginFromCurrentState,
                                animations: {
-                                self.refreshControl.attributedTitle = NSAttributedString(string: self.refreshingDataText,
-                                                                                         attributes: [:])
-                                let refreshControlHeight = self.refreshControl.frame.height
-                                self.tableView.contentOffset = CGPoint(x: 0, y: -refreshControlHeight * 4)
+                                   self.refreshControl.attributedTitle = NSAttributedString(string: self.refreshingDataText,
+                                                                                            attributes: [:])
+                                   let refreshControlHeight = self.refreshControl.frame.height
+                                   self.tableView.contentOffset = CGPoint(x: 0, y: -refreshControlHeight * 4)
 
-                },
+                               },
                                completion: nil)
             }
         }
@@ -381,13 +381,13 @@ open class TPTableViewController: UIViewController {
 
     // TODO: not really sure if this needs to be public
     public func setNoContentLabel() {
-
-        guard data?.isEmpty ?? true else {
-            setNoContentLabel(isHidden: true, text: "")
-            return
-        }
         var noDataText = "No data"
         var noResults = false
+
+        guard !isLoadingData else {
+            setNoContentLabel(isHidden: false, text: refreshingDataText)
+            return
+        }
 
         if searchController.searchBar.text == "" && data?.count == 0 {
             noDataText = delegate?.textForNoData() ?? "No data"
@@ -400,7 +400,7 @@ open class TPTableViewController: UIViewController {
             noResults = true
         }
 
-        let isHidden = !noResults || isFetchingData
+        let isHidden = !noResults || isLoadingData
 
         if noResults {
             setNoContentLabel(isHidden: isHidden, text: noDataText)
@@ -460,7 +460,7 @@ open class TPTableViewController: UIViewController {
 
     // Happens when view loads for the first time or the user drags down to refresh
     public func refreshData() {
-        isFetchingData = true
+        isLoadingData = true
         setNoContentLabel()
 
         refreshControl.layoutIfNeeded()
@@ -495,7 +495,7 @@ open class TPTableViewController: UIViewController {
     }
 
     func loadingDataEnded() {
-        isFetchingData = false
+        isLoadingData = false
         let pullToRefreshAttributedTitle = NSAttributedString(string: pullToRefreshText,
                                                               attributes: [:])
         DispatchQueue.main.async {
@@ -515,8 +515,6 @@ open class TPTableViewController: UIViewController {
 
 extension TPTableViewController: UITableViewDataSource {
     public func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        setNoContentLabel()
-
         guard let data = self.data else { return 0 }
         guard let filteredData = self.filteredData else { return 0 }
 
@@ -586,7 +584,7 @@ extension TPTableViewController: UITableViewDataSource {
 
             guard let lastSectionData = self.delegate?.filterDataForSection?(data: data,
                                                                              section: indexPath.section) else {
-                                                                                return
+                return
             }
 
             if indexPath.row == lastSectionData.count - 1 {
