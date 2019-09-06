@@ -339,8 +339,12 @@ open class TPTableViewController: UIViewController {
 
         definesPresentationContext = true
 
-        if let textField = self.searchController.searchBar.value(forKey: "_searchField") as? UITextField {
-            textField.clearButtonMode = .always
+        if #available(iOS 13, *) {
+            searchController.searchBar.searchTextField.clearButtonMode = .always
+        } else {
+            if let textField = self.searchController.searchBar.value(forKey: "_searchField") as? UITextField {
+                textField.clearButtonMode = .always
+            }
         }
     }
 
